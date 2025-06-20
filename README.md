@@ -1,61 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FinTrack ID - Personal Finance Manager
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
+</p>
+<p align="center">
+  <strong>A personal finance management application built with the Laravel Framework.</strong>
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## About FinTrack ID
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+FinTrack ID is a web-based application designed to help users track their income and expenses, manage their financial accounts, and set monthly budgets to stay on top of their financial goals. The application features a clean, intuitive interface for both regular users and administrators.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This project was built from scratch using Laravel 10 without any starter kits like Breeze or Jetstream, focusing on a manual implementation of core features.
 
-## Learning Laravel
+## Key Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### For Users:
+- **Secure Authentication**: Manual login, registration, and logout system.
+- **Dashboard**: An at-a-glance summary of monthly income, expenses, and total balance. Includes a 30-day expense chart powered by Chart.js and financial insights like the top spending category.
+- **Account Management**: CRUD functionality to manage various financial accounts (e.g., Bank, E-Wallet, Cash).
+- **Transaction Tracking**: Full CRUD for logging income and expense transactions, which automatically update account balances. Includes filtering by month, year, and category.
+- **Budgeting**: Set monthly spending limits for different expense categories and track progress.
+- **Category Management**: Users can define their own personal spending/income categories.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### For Admins:
+- **Admin Panel**: A separate section for site administration.
+- **User Management**: Full CRUD capabilities to manage all registered users.
+- **Global Category Management**: Admins can create and manage a set of default categories available to all users.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Technology Stack
 
-## Laravel Sponsors
+- **Backend**: Laravel 10, PHP
+- **Frontend**: Blade, Tailwind CSS, Vite.js, Chart.js
+- **Database**: MySQL (or any Laravel-supported SQL database)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Getting Started
 
-### Premium Partners
+Follow these instructions to get the project up and running on your local machine.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Prerequisites
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- A database server (e.g., MySQL, MariaDB)
 
-## Contributing
+### Installation Steps
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/fintrack-id.git
+    cd fintrack-id
+    ```
 
-## Code of Conduct
+2.  **Install PHP dependencies:**
+    ```bash
+    composer install
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3.  **Install NPM dependencies:**
+    ```bash
+    npm install
+    ```
 
-## Security Vulnerabilities
+4.  **Set up your environment file:**
+    Copy the example `.env` file and generate an application key.
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5.  **Configure your database:**
+    Open the `.env` file and set your database connection details (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
 
-## License
+6.  **Run the database migrations and seeders:**
+    This will create the necessary tables and populate them with default global categories and two sample users (an admin and a regular user).
+    ```bash
+    php artisan migrate --seed
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+7.  **Build frontend assets:**
+    ```bash
+    npm run dev
+    ```
+
+8.  **Serve the application:**
+    ```bash
+    php artisan serve
+    ```
+    The application will be available at `http://127.0.0.1:8000`.
+
+### Default Login Credentials
+
+The database seeder creates two users for you to test with:
+
+-   **Admin User**
+    -   **Email**: `admin@fintrack.id`
+    -   **Password**: `password`
+
+-   **Regular User**
+    -   **Email**: `user@fintrack.id`
+    -   **Password**: `password`
