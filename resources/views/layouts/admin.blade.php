@@ -59,7 +59,7 @@
                     <!-- kembali ke dashboard -->
                     <a href="{{ route('dashboard') }}" class="flex items-center text-white hover:bg-black hover:bg-opacity-20 px-4 py-3 rounded-lg transition duration-200">
                         <i class="fas fa-arrow-left mr-3"></i>
-                        Kembali ke Dashboard
+                        Kembali ke Dashboard User
                     </a>
                 </nav>
             </div>

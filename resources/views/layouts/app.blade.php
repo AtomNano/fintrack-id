@@ -24,6 +24,7 @@
         
         .gradient-bg {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #059669 75%, #065f46 100%);
+            background-color: rgba(30, 58, 138, 0.95); /* fallback solid color */
         }
         
         .financial-pattern {
@@ -78,6 +79,8 @@
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease;
+            z-index: 1000;
+            position: absolute;
         }
         
         .dropdown:hover .dropdown-menu {
@@ -85,12 +88,33 @@
             visibility: visible;
             transform: translateY(0);
         }
+        
+        /* Ensure navbar doesn't clip dropdowns */
+        nav {
+            overflow: visible !important;
+        }
+        
+        .container {
+            overflow: visible !important;
+        }
+        
+        /* Dropdown positioning fixes */
+        .dropdown {
+            position: relative;
+            overflow: visible;
+        }
+        
+        .dropdown-menu {
+            min-width: 200px;
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div id="app">
         <!-- Navigation -->
-        <nav class="gradient-bg financial-pattern shadow-xl sticky top-0 z-50">
+        <nav class="gradient-bg financial-pattern shadow-xl sticky top" style="background: rgba(30, 58, 138, 0.95);">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center py-4">
                     <!-- Logo -->
@@ -98,7 +122,8 @@
                         <div class="bg-white/20 backdrop-blur-sm rounded-xl p-2">
                             <i class="fas fa-chart-line text-white text-xl"></i>
                         </div>
-                        <a href="{{ url('/') }}" class="text-2xl font-bold text-white logo-glow">
+                        <a href="{{ url('/') }}" class="text-2xl font-bold text-white
+                        logo-glow">
                             FinTrack<span class="text-green-300">ID</span>
                         </a>
                     </div>
@@ -142,7 +167,7 @@
                                             <span>{{ Auth::user()->name }}</span>
                                             <i class="fas fa-chevron-down text-xs"></i>
                                         </button>
-                                        <div class="dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl py-2">
+                                        <div class="dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50">
                                             <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
                                                 <i class="fas fa-user mr-2"></i>Profile Settings
                                             </a>
@@ -181,7 +206,7 @@
                                             <span>{{ Auth::user()->name }}</span>
                                             <i class="fas fa-chevron-down text-xs"></i>
                                         </button>
-                                        <div class="dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl py-2">
+                                        <div class="dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50">
                                             <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
                                                 <i class="fas fa-user mr-2"></i>Profile Settings
                                             </a>

@@ -3,52 +3,90 @@
 @section('title', 'Login ke Akun Anda')
 
 @section('content')
-<div class="flex justify-center">
-    <div class="w-full max-w-md">
-        <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Login ke FinTrack ID</h1>
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-gray-200">Selamat Datang</h1>
+            <p class="mt-2 text-sm text-gray-600">Masuk ke akun FinTrack ID Anda</p>
+        </div>
 
-            <!-- Session Status -->
-            @if (session('status'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <span class="block sm:inline">{{ session('status') }}</span>
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('login') }}">
+        <div class="bg-white shadow-xl rounded-2xl p-8 space-y-6">
+            
+            <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
 
-                <!-- Email Address -->
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                        Alamat Email
-                    </label>
-                    <input class="shadow appearance-none border @error('email') border-red-500 @enderror rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                     @error('email')
-                        <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
+                <div>
+                    <label for="email" class="text-sm font-medium text-gray-700">Alamat Email</label>
+                    <input 
+                        id="email" 
+                        name="email" 
+                        type="email" 
+                        autocomplete="email" 
+                        required 
+                        class="mt-1 block w-full px-4 py-3 bg-white border border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="nama@email.com"
+                        value="{{ old('email') }}"
+                    >
+                    @error('email')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Password -->
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                        Password
-                    </label>
-                    <input class="shadow appearance-none border @error('password') border-red-500 @enderror rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" name="password" required autocomplete="current-password">
+                <div>
+                    <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                    <input 
+                        id="password" 
+                        name="password" 
+                        type="password" 
+                        autocomplete="current-password" 
+                        required 
+                        class="mt-1 block w-full px-4 py-3 bg-white border border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Masukkan password Anda"
+                    >
                     @error('password')
-                         <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full" type="submit">
-                        Login
+                    <div class="flex items-center">
+                        <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">Ingat saya</label>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Lupa password?</a>
+                    </div>
+                </div>
+
+                <div>
+                    <button 
+                        type="submit" 
+                        class="w-full flex justify-center py-3 px-4 border border-gray-200 rounded-xl shadow-sm text-sm font-medium text-gray-400 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Masuk ke Akun
                     </button>
                 </div>
             </form>
-            <p class="text-center text-gray-500 text-sm mt-6">
-                Belum punya akun? <a class="font-bold text-blue-600 hover:text-blue-800" href="{{ route('register') }}">Daftar di sini</a>.
-            </p>
+
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-200"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white text-gray-500">Atau</span>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-600">
+                    Belum punya akun?
+                    <a href="{{ route('register') }}" class="font-medium text-gray-900 hover:text-black">
+                        Daftar sekarang &rarr;
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 </div>
