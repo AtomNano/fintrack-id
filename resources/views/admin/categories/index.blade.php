@@ -1,7 +1,9 @@
 <!-- File: resources/views/admin/categories/index.blade.php -->
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Manajemen Kategori Global')
+@section('title', 'Manajemen Kategori Global - Admin Panel')
+@section('page-title', 'Manajemen Kategori Global')
+@section('page-description', 'Kelola kategori default untuk semua pengguna')
 
 @section('content')
 <div class="bg-white p-8 rounded-lg shadow-md">

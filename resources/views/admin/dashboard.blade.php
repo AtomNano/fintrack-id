@@ -1,6 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Admin Dashboard')
+@section('title', 'Admin Dashboard - FinTrack ID')
+@section('page-title', 'Admin Dashboard')
+@section('page-description', 'Kelola sistem FinTrack ID')
 
 @section('content')
     <div class="mb-6">

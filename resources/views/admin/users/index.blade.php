@@ -1,7 +1,9 @@
 <!-- File: resources/views/admin/users/index.blade.php -->
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Manajemen Pengguna')
+@section('title', 'Manajemen Pengguna - Admin Panel')
+@section('page-title', 'Manajemen Pengguna')
+@section('page-description', 'Kelola data pengguna sistem')
 
 @section('content')
 <div class="bg-white p-8 rounded-lg shadow-md">
