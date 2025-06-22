@@ -61,12 +61,12 @@ class UserDashboardController extends Controller
         ];
 
         // 5. Insight: Kategori Pengeluaran Terbesar Bulan Ini
-        $topCategory = Transaction::where('transactions.user_id', $user->id)
-            ->where('transactions.type', 'expense')
+        $topCategory = Transaction::where('luthfi_transactions.user_id', $user->id)
+            ->where('luthfi_transactions.type', 'expense')
             ->whereBetween('transaction_date', [$startOfMonth, $endOfMonth])
-            ->join('categories', 'transactions.category_id', '=', 'categories.id')
-            ->select('categories.name', DB::raw('SUM(transactions.amount) as total'))
-            ->groupBy('categories.name')
+            ->join('luthfi_categories', 'luthfi_transactions.category_id', '=', 'luthfi_categories.id')
+            ->select('luthfi_categories.name', DB::raw('SUM(luthfi_transactions.amount) as total'))
+            ->groupBy('luthfi_categories.name')
             ->orderBy('total', 'DESC')
             ->first();
 

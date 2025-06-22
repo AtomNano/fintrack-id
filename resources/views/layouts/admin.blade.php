@@ -87,10 +87,10 @@
         </div>
 
         <!-- Main Content -->
-        <div class="admin-content ml-64 flex-1">
+        <div class="admin-content ml-64 flex-1 flex flex-col min-h-screen">
 
             <!-- Page Content -->
-            <main class="p-6">
+            <main class="p-6 flex-grow">
                 @if(session('success'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                         <i class="fas fa-check-circle mr-2"></i>
@@ -107,7 +107,14 @@
 
                 @yield('content')
             </main>
+
+            <footer class="bg-white shadow-inner mt-auto">
+                <div class="container mx-auto px-6 py-4 text-center text-gray-600">
+                    <p>&copy; {{ date('Y') }} FinTrack ID - Admin Panel. All Rights Reserved.</p>
+                </div>
+            </footer>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html> 

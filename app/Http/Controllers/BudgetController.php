@@ -36,7 +36,7 @@ class BudgetController extends Controller
             ->pluck('amount', 'category_id');
             
         // Ambil total pengeluaran per kategori untuk bulan ini
-        $spendings = DB::table('transactions')
+        $spendings = DB::table('luthfi_transactions')
             ->where('user_id', $user->id)
             ->where('type', 'expense')
             ->whereBetween('transaction_date', [$startDate, $endDate])

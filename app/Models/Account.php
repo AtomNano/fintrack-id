@@ -16,6 +16,8 @@ class Account extends Model
         'balance',
     ];
 
+    protected $table = 'luthfi_accounts';
+
     // Relasi: Akun dimiliki oleh User
     public function user()
     {

@@ -7,15 +7,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('luthfi_categories', function (Blueprint $table) {
             $table->id();
             // user_id bisa null untuk kategori global (default)
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('luthfi_users')->onDelete('cascade');
             $table->string('name');
-            $table->enum('type', ['income', 'expense']);
+            $table->string('type')->comment('income or expense');
             $table->string('icon')->nullable(); // For FontAwesome class
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('categories'); }
+    public function down(): void { Schema::dropIfExists('luthfi_categories'); }
 }; 

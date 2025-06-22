@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $table = 'luthfi_categories';
+
     protected $fillable = [
         'user_id', // Nullable for global categories
         'name',

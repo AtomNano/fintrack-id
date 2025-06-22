@@ -36,8 +36,8 @@
     <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Deskripsi</label>
     <textarea name="description" id="description" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700">{{ old('description', $transaction->description ?? '') }}</textarea>
 </div>
-<div class="flex items-center justify-end">
-    <a href="{{ route('transactions.index') }}" class="text-gray-600 hover:text-gray-800 font-bold py-2 px-4 rounded mr-2">Batal</a>
+<div class="flex items-center justify-end space-x-3">
+    <button type="button" class="close-modal text-gray-600 hover:text-gray-800 font-bold py-2 px-4 rounded">Batal</button>
     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Simpan</button>
 </div>
 

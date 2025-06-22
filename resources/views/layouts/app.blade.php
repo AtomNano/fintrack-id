@@ -60,6 +60,15 @@
         .nav-link:hover::before {
             width: 100%;
         }
+
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: white !important;
+            transform: translateY(-2px);
+        }
         
         .mobile-menu {
             transform: translateX(100%);
@@ -112,9 +121,9 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <div id="app">
+    <div id="app" class="flex flex-col min-h-screen">
         <!-- Navigation -->
-        <nav class="gradient-bg financial-pattern shadow-xl sticky top" style="background: rgba(30, 58, 138, 0.95);">
+        <nav class="gradient-bg financial-pattern shadow-xl sticky top-0 z-40" style="background: rgba(30, 58, 138, 0.95);">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center py-4">
                     <!-- Logo -->
@@ -133,15 +142,10 @@
                         <!-- Guest Navigation -->
                         @guest
                             <div class="flex items-center space-x-6">
-                                @if (Route::has('login'))
-                                    <a href="{{ route('login') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                @if (Route::has('auth'))
+                                    <a href="{{ route('auth') }}" class="nav-link {{ request()->routeIs('auth') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-sign-in-alt"></i>
-                                        <span>Login</span>
-                                    </a>
-                                @endif
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition-all duration-300 font-medium">
-                                        Register
+                                        <span>Login / Register</span>
                                     </a>
                                 @endif
                             </div>
@@ -149,15 +153,15 @@
                             <!-- Admin Navigation -->
                             @if (Auth::user()->role === 'admin')
                                 <div class="flex items-center space-x-6">
-                                    <a href="{{ route('admin.dashboard') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-tachometer-alt text-green-300"></i>
                                         <span>Admin Dashboard</span>
                                     </a>
-                                    <a href="{{ route('admin.users.index') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                    <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-users text-blue-300"></i>
                                         <span>Kelola User</span>
                                     </a>
-                                    <a href="{{ route('admin.categories.index') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                    <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-tags text-purple-300"></i>
                                         <span>Kelola Kategori</span>
                                     </a>
@@ -184,19 +188,19 @@
                             @else
                                 <!-- User Navigation -->
                                 <div class="flex items-center space-x-6">
-                                    <a href="{{ route('dashboard') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                    <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-tachometer-alt text-green-300"></i>
                                         <span>Dashboard</span>
                                     </a>
-                                    <a href="{{ route('accounts.index') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                    <a href="{{ route('accounts.index') }}" class="nav-link {{ request()->routeIs('accounts.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-wallet text-blue-300"></i>
                                         <span>Akun Saya</span>
                                     </a>
-                                    <a href="{{ route('transactions.index') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                    <a href="{{ route('transactions.index') }}" class="nav-link {{ request()->routeIs('transactions.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-exchange-alt text-purple-300"></i>
                                         <span>Transaksi</span>
                                     </a>
-                                    <a href="{{ route('budgets.index') }}" class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
+                                    <a href="{{ route('budgets.index') }}" class="nav-link {{ request()->routeIs('budgets.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-chart-pie text-yellow-300"></i>
                                         <span>Anggaran</span>
                                     </a>
@@ -245,14 +249,9 @@
                 <!-- Mobile Guest Menu -->
                 @guest
                     <div class="space-y-4">
-                        @if (Route::has('login'))
-                            <a href="{{ route('login') }}" class="block p-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl">
-                                <i class="fas fa-sign-in-alt mr-3"></i>Login
-                            </a>
-                        @endif
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="block p-4 border-2 border-blue-500 text-blue-500 rounded-xl text-center">
-                                <i class="fas fa-user-plus mr-3"></i>Register
+                        @if (Route::has('auth'))
+                            <a href="{{ route('auth') }}" class="block p-4 {{ request()->routeIs('auth') ? 'bg-gradient-to-r from-green-500 to-blue-600' : 'bg-gradient-to-r from-blue-500 to-purple-600' }} text-white rounded-xl">
+                                <i class="fas fa-sign-in-alt mr-3"></i>Login / Register
                             </a>
                         @endif
                     </div>
@@ -260,26 +259,26 @@
                     <!-- Mobile User Menu -->
                     <div class="space-y-3">
                         @if (Auth::user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}" class="block p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                            <a href="{{ route('admin.dashboard') }}" class="block p-3 {{ request()->routeIs('admin.dashboard') ? 'bg-green-100 border-l-4 border-green-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-tachometer-alt mr-3 text-green-500"></i>Admin Dashboard
                             </a>
-                            <a href="{{ route('admin.users.index') }}" class="block p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                            <a href="{{ route('admin.users.index') }}" class="block p-3 {{ request()->routeIs('admin.users.*') ? 'bg-blue-100 border-l-4 border-blue-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-users mr-3 text-blue-500"></i>Kelola User
                             </a>
-                            <a href="{{ route('admin.categories.index') }}" class="block p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                            <a href="{{ route('admin.categories.index') }}" class="block p-3 {{ request()->routeIs('admin.categories.*') ? 'bg-purple-100 border-l-4 border-purple-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-tags mr-3 text-purple-500"></i>Kelola Kategori
                             </a>
                         @else
-                            <a href="{{ route('dashboard') }}" class="block p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                            <a href="{{ route('dashboard') }}" class="block p-3 {{ request()->routeIs('dashboard') ? 'bg-green-100 border-l-4 border-green-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-tachometer-alt mr-3 text-green-500"></i>Dashboard
                             </a>
-                            <a href="{{ route('accounts.index') }}" class="block p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                            <a href="{{ route('accounts.index') }}" class="block p-3 {{ request()->routeIs('accounts.*') ? 'bg-blue-100 border-l-4 border-blue-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-wallet mr-3 text-blue-500"></i>Akun Saya
                             </a>
-                            <a href="{{ route('transactions.index') }}" class="block p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                            <a href="{{ route('transactions.index') }}" class="block p-3 {{ request()->routeIs('transactions.*') ? 'bg-purple-100 border-l-4 border-purple-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-exchange-alt mr-3 text-purple-500"></i>Transaksi
                             </a>
-                            <a href="{{ route('budgets.index') }}" class="block p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                            <a href="{{ route('budgets.index') }}" class="block p-3 {{ request()->routeIs('budgets.*') ? 'bg-yellow-100 border-l-4 border-yellow-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-chart-pie mr-3 text-yellow-500"></i>Anggaran
                             </a>
                         @endif
@@ -299,11 +298,20 @@
             </form>
         @endauth
 
-        <main class="py-8">
+        <!-- Main Content -->
+        <main class="py-10 flex-grow">
             <div class="container mx-auto px-4">
                 @yield('content')
             </div>
         </main>
+        
+        <footer class="bg-white shadow-inner mt-auto">
+            <div class="container mx-auto px-4 py-6 text-center text-gray-600">
+                <p>&copy; {{ date('Y') }} FinTrack ID. All Rights Reserved.</p>
+                <p class="text-sm">Created with <i class="fas fa-heart text-red-500"></i> by Luthfi</p>
+            </div>
+        </footer>
+
     </div>
 
     <script>
@@ -329,5 +337,6 @@
             });
         }
     </script>
+    @stack('scripts')
 </body>
 </html>

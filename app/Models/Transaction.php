@@ -10,6 +10,8 @@ class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'luthfi_transactions';
+
     protected $fillable = [
         'user_id',
         'account_id',

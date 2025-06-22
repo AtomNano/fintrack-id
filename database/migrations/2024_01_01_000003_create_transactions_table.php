@@ -7,11 +7,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('luthfi_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('account_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('luthfi_users')->onDelete('cascade');
+            $table->foreignId('account_id')->constrained('luthfi_accounts')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('luthfi_categories')->onDelete('cascade');
             $table->decimal('amount', 15, 2);
             $table->enum('type', ['income', 'expense']);
             $table->text('description')->nullable();
@@ -20,5 +20,5 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    public function down(): void { Schema::dropIfExists('transactions'); }
+    public function down(): void { Schema::dropIfExists('luthfi_transactions'); }
 }; 

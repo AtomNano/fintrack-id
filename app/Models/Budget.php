@@ -9,6 +9,8 @@ class Budget extends Model
 {
     use HasFactory;
 
+    protected $table = 'luthfi_budgets';
+
     protected $fillable = [
         'user_id',
         'category_id',

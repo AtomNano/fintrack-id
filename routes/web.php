@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Import Controller
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\UserDashboardController;
 
@@ -30,12 +29,19 @@ Route::get('/', function () {
     return view('welcome'); // Halaman homepage publik
 })->name('home');
 
-// Route untuk Guest (yang belum login)
+// Route untuk Guest (yang belum login) - Combined Auth Page
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('register', [RegisterController::class, 'register']);
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login']);
+    Route::get('auth', [AuthController::class, 'showAuthForm'])->name('auth');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+    
+    // Redirect old routes to new combined auth page
+    Route::get('login', function() {
+        return redirect()->route('auth');
+    });
+    Route::get('register', function() {
+        return redirect()->route('auth');
+    });
 });
 
 // Route untuk yang sudah Login

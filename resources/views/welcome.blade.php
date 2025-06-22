@@ -14,10 +14,10 @@
                 FinTrack ID membantu Anda melacak setiap pemasukan dan pengeluaran, membuat anggaran, dan mencapai tujuan finansial Anda.
             </p>
             @guest
-                <a href="{{ route('register') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 mr-2">
+                <a href="{{ route('auth') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 mr-2">
                     Mulai Sekarang (Gratis)
                 </a>
-                <a href="{{ route('login') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out">
+                <a href="{{ route('auth') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out">
                     Masuk
                 </a>
             @else
@@ -81,7 +81,7 @@
             <h2 class="text-3xl font-bold mb-4">Siap Mengambil Kendali Finansial Anda?</h2>
             <p class="text-gray-300 mb-8 max-w-xl mx-auto">Bergabunglah dengan ribuan pengguna lain dan mulailah perjalanan finansial Anda yang lebih baik hari ini.</p>
             @guest
-            <a href="{{ route('register') }}" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <a href="{{ route('auth') }}" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105">
                 Daftar Sekarang
             </a>
             @endguest

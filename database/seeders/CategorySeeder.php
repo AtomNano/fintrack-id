@@ -13,8 +13,13 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // Kosongkan tabel dulu jika perlu
-        // DB::table('categories')->truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        \DB::table('luthfi_transactions')->truncate();
+        \DB::table('luthfi_budgets')->truncate();
+        \DB::table('luthfi_accounts')->truncate();
+        \DB::table('luthfi_users')->truncate();
+        \DB::table('luthfi_categories')->truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         $categories = [
             // Kategori Pemasukan

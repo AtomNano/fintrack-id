@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TransactionController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
@@ -33,9 +36,10 @@ class TransactionController extends Controller
         
         $transactions = $query->paginate(15);
         $categories = $user->categories()->orWhereNull('user_id')->get();
+        $accounts = $user->accounts()->get();
         $years = $user->transactions()->selectRaw('YEAR(transaction_date) as year')->distinct()->orderBy('year', 'desc')->pluck('year');
 
-        return view('transactions.index', compact('transactions', 'categories', 'years'));
+        return view('transactions.index', compact('transactions', 'categories', 'accounts', 'years'));
     }
 
     /**
@@ -43,11 +47,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        // Ambil kategori global dan milik user
-        $categories = Category::whereNull('user_id')->orWhere('user_id', $user->id)->get();
-        $accounts = $user->accounts;
-        return view('transactions.create', compact('categories', 'accounts'));
+        return redirect()->route('transactions.index');
     }
 
     /**
@@ -58,8 +58,8 @@ class TransactionController extends Controller
         $request->validate([
             'type' => 'required|in:income,expense',
             'amount' => 'required|numeric|min:0',
-            'category_id' => 'required|exists:categories,id',
-            'account_id' => 'required|exists:accounts,id,user_id,' . Auth::id(),
+            'category_id' => 'required|exists:luthfi_categories,id',
+            'account_id' => 'required|exists:luthfi_accounts,id,user_id,' . Auth::id(),
             'transaction_date' => 'required|date',
             'description' => 'nullable|string',
         ]);
@@ -86,13 +86,7 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        // Pastikan user hanya bisa edit transaksinya sendiri
-        $this->authorize('update', $transaction);
-
-        $user = Auth::user();
-        $categories = Category::whereNull('user_id')->orWhere('user_id', $user->id)->get();
-        $accounts = $user->accounts;
-        return view('transactions.edit', compact('transaction', 'categories', 'accounts'));
+        return redirect()->route('transactions.index');
     }
 
     /**
@@ -105,8 +99,8 @@ class TransactionController extends Controller
         $request->validate([
             'type' => 'required|in:income,expense',
             'amount' => 'required|numeric|min:0',
-            'category_id' => 'required|exists:categories,id',
-            'account_id' => 'required|exists:accounts,id,user_id,' . Auth::id(),
+            'category_id' => 'required|exists:luthfi_categories,id',
+            'account_id' => 'required|exists:luthfi_accounts,id,user_id,' . Auth::id(),
             'transaction_date' => 'required|date',
             'description' => 'nullable|string',
         ]);
