@@ -70,12 +70,20 @@ class UserDashboardController extends Controller
             ->orderBy('total', 'DESC')
             ->first();
 
+        // 6. Ambil 5 transaksi terakhir user
+        $recentTransactions = Transaction::with(['category', 'account'])
+            ->where('user_id', $user->id)
+            ->orderByDesc('transaction_date')
+            ->limit(5)
+            ->get();
+
         return view('dashboard', compact(
             'totalIncome', 
             'totalExpense',
             'totalBalance',
             'dailyExpenseChart',
-            'topCategory'
+            'topCategory',
+            'recentTransactions'
         ));
     }
 } 

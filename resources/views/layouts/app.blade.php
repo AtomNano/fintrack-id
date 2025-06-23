@@ -18,78 +18,17 @@
 
     <!-- Styles -->
     <style>
-        body {
-            font-family: 'Figtree', sans-serif;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #059669 75%, #065f46 100%);
-            background-color: rgba(30, 58, 138, 0.95); /* fallback solid color */
-        }
-        
-        .financial-pattern {
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                radial-gradient(circle at 75% 75%, rgba(16,185,129,0.15) 1px, transparent 1px),
-                url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 40px 40px, 40px 40px, 80px 80px;
-        }
-        
-        .nav-link {
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-link:hover {
-            transform: translateY(-2px);
-        }
-        
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #10b981, #06d6a0, #f72585);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-            border-radius: 1px;
-        }
-        
-        .nav-link:hover::before {
-            width: 100%;
+        .glassmorphism-bg {
+            background-color: #0c0a09; /* Fallback color */
+            background-image: linear-gradient(135deg, #111827 0%, #1a1f36 50%, #4338ca 100%);
+            background-attachment: fixed;
         }
 
-        .nav-link.active::before {
-            width: 100%;
-        }
-        
-        .nav-link.active {
-            color: white !important;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-        
-        .logo-glow {
-            text-shadow: 0 0 30px rgba(16,185,129,0.6), 0 0 60px rgba(16,185,129,0.3);
-        }
-        
         .dropdown-menu {
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease;
-            z-index: 1000;
-            position: absolute;
         }
         
         .dropdown:hover .dropdown-menu {
@@ -97,139 +36,48 @@
             visibility: visible;
             transform: translateY(0);
         }
-        
-        /* Ensure navbar doesn't clip dropdowns */
-        nav {
-            overflow: visible !important;
-        }
-        
-        .container {
-            overflow: visible !important;
-        }
-        
-        /* Dropdown positioning fixes */
-        .dropdown {
-            position: relative;
-            overflow: visible;
-        }
-        
-        .dropdown-menu {
-            min-width: 200px;
-            border: 1px solid rgba(0,0,0,0.1);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <div id="app" class="flex flex-col min-h-screen">
+<body class="glassmorphism-bg text-gray-200 antialiased">
+    <div id="app" class="min-h-screen flex flex-col">
         <!-- Navigation -->
-        <nav class="gradient-bg financial-pattern shadow-xl sticky top-0 z-40" style="background: rgba(30, 58, 138, 0.95);">
-            <div class="container mx-auto px-4">
-                <div class="flex justify-between items-center py-4">
-                    <!-- Logo -->
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-2">
-                            <i class="fas fa-chart-line text-white text-xl"></i>
+        <nav class="bg-white/5 backdrop-blur-md sticky top-0 z-40 border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex justify-between items-center h-20">
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-3">
+                        <div class="bg-purple-500/20 text-purple-400 p-2 rounded-lg">
+                            <i class="fas fa-chart-line text-xl"></i>
                         </div>
-                        <a href="{{ url('/') }}" class="text-2xl font-bold text-white
-                        logo-glow">
-                            FinTrack<span class="text-green-300">ID</span>
-                        </a>
-                    </div>
+                        <span class="text-2xl font-bold text-white">
+                            FinTrack<span class="text-purple-400">ID</span>
+                        </span>
+                    </a>
 
-                    <!-- Desktop Navigation -->
                     <div class="hidden lg:flex items-center space-x-8">
-                        <!-- Guest Navigation -->
-                        @guest
-                            <div class="flex items-center space-x-6">
-                                @if (Route::has('auth'))
-                                    <a href="{{ route('auth') }}" class="nav-link {{ request()->routeIs('auth') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-sign-in-alt"></i>
-                                        <span>Login / Register</span>
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                            <a href="{{ route('transactions.index') }}" class="text-gray-300 hover:text-white transition-colors">Transactions</a>
+                            <a href="{{ route('budgets.index') }}" class="text-gray-300 hover:text-white transition-colors">Budgets</a>
+                            
+                            <div class="relative dropdown">
+                                <button class="flex items-center space-x-2 text-white">
+                                    <span>{{ Auth::user()->name }}</span>
+                                    <i class="fas fa-chevron-down text-xs"></i>
+                                </button>
+                                <div class="dropdown-menu absolute right-0 top-full mt-3 w-48 bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-white/10 py-2 z-50">
+                                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-white/10 transition-colors">
+                                        <i class="fas fa-user-cog w-6"></i> Profile
                                     </a>
-                                @endif
+                                    <hr class="border-white/10 my-1">
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-red-400 hover:bg-white/10 transition-colors">
+                                        <i class="fas fa-sign-out-alt w-6"></i> Logout
+                                    </a>
+                                </div>
                             </div>
-                        @else
-                            <!-- Admin Navigation -->
-                            @if (Auth::user()->role === 'admin')
-                                <div class="flex items-center space-x-6">
-                                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-tachometer-alt text-green-300"></i>
-                                        <span>Admin Dashboard</span>
-                                    </a>
-                                    <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-users text-blue-300"></i>
-                                        <span>Kelola User</span>
-                                    </a>
-                                    <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-tags text-purple-300"></i>
-                                        <span>Kelola Kategori</span>
-                                    </a>
-                                    <div class="dropdown relative">
-                                        <button class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                            <i class="fas fa-user-circle text-yellow-300"></i>
-                                            <span>{{ Auth::user()->name }}</span>
-                                            <i class="fas fa-chevron-down text-xs"></i>
-                                        </button>
-                                        <div class="dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50">
-                                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
-                                                <i class="fas fa-user mr-2"></i>Profile Settings
-                                            </a>
-                                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
-                                                <i class="fas fa-cog mr-2"></i>Preferences
-                                            </a>
-                                            <hr class="my-2">
-                                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-red-600 hover:bg-red-50 transition-colors">
-                                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @else
-                                <!-- User Navigation -->
-                                <div class="flex items-center space-x-6">
-                                    <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-tachometer-alt text-green-300"></i>
-                                        <span>Dashboard</span>
-                                    </a>
-                                    <a href="{{ route('accounts.index') }}" class="nav-link {{ request()->routeIs('accounts.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-wallet text-blue-300"></i>
-                                        <span>Akun Bank Saya</span>
-                                    </a>
-                                    <a href="{{ route('transactions.index') }}" class="nav-link {{ request()->routeIs('transactions.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-exchange-alt text-purple-300"></i>
-                                        <span>Transaksi</span>
-                                    </a>
-                                    <a href="{{ route('budgets.index') }}" class="nav-link {{ request()->routeIs('budgets.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                        <i class="fas fa-chart-pie text-yellow-300"></i>
-                                        <span>Anggaran</span>
-                                    </a>
-                                    <div class="dropdown relative">
-                                        <button class="nav-link text-white/90 hover:text-white font-medium flex items-center space-x-2">
-                                            <i class="fas fa-user-circle text-green-300"></i>
-                                            <span>{{ Auth::user()->name }}</span>
-                                            <i class="fas fa-chevron-down text-xs"></i>
-                                        </button>
-                                        <div class="dropdown-menu absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl py-2 z-50">
-                                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
-                                                <i class="fas fa-user mr-2"></i>Profile Settings
-                                            </a>
-                                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
-                                                <i class="fas fa-cog mr-2"></i>Preferences
-                                            </a>
-                                            <hr class="my-2">
-                                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-red-600 hover:bg-red-50 transition-colors">
-                                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endguest
+                        @endauth
                     </div>
 
-                    <!-- Mobile Menu Button -->
-                    <button id="mobileMenuBtn" class="lg:hidden text-white p-3 rounded-lg hover:bg-white/10 transition-all duration-300">
+                     <button id="mobileMenuBtn" class="lg:hidden text-white p-2">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -299,10 +147,9 @@
         @endauth
 
         <!-- Main Content -->
-        <main class="py-10 flex-grow">
-            <div class="container mx-auto px-4">
-                @yield('content')
-            </div>
+        <main class="flex-grow">
+            {{-- Konten dari setiap halaman akan dimuat di sini --}}
+            @yield('content')
         </main>
         
         <footer class="bg-white shadow-inner mt-auto">
