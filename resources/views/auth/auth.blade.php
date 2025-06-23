@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('title', 'Masuk atau Daftar - FinTrack ID')
@@ -27,7 +26,7 @@
 @endpush
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center py-12 px-4"
+<div class="min-h-screen flex items-center justify-center py-0 px-4"
      x-data="{ isRegister: @json($errors->has('name') || old('name')) }"
      x-cloak>
     <div class="relative w-full max-w-4xl min-h-[600px] rounded-2xl shadow-2xl overflow-hidden bg-black/30 backdrop-blur-xl border border-white/10">
