@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title', 'Masuk atau Daftar - FinTrack ID')
@@ -32,14 +33,15 @@
     <div class="relative w-full max-w-4xl min-h-[600px] rounded-2xl shadow-2xl overflow-hidden bg-black/30 backdrop-blur-xl border border-white/10">
         <div class="relative h-full grid md:grid-cols-2">
             <!-- Login Form (Left) -->
-            <div class="flex flex-col justify-center p-8 text-white absolute inset-0 md:static"
-                 x-show="!isRegister"
-                 x-transition:enter="transition transform duration-500"
-                 x-transition:enter-start="opacity-0 -translate-x-8"
-                 x-transition:enter-end="opacity-100 translate-x-0"
-                 x-transition:leave="transition transform duration-500"
-                 x-transition:leave-start="opacity-100 translate-x-0"
-                 x-transition:leave-end="opacity-0 -translate-x-8">
+            <div 
+                class="flex flex-col justify-center p-8 text-white transition-all duration-500 md:static absolute inset-0 md:translate-x-0"
+                :class="{
+                    'opacity-100 pointer-events-auto z-10 md:z-0': !isRegister,
+                    'opacity-0 pointer-events-none z-0 md:z-0': isRegister,
+                    'md:opacity-100 md:pointer-events-auto': true
+                }"
+                x-cloak
+            >
                 <h2 class="text-3xl font-bold mb-6 text-center">Selamat Datang Kembali</h2>
                 <form method="POST" action="{{ route('login') }}" class="space-y-4">
                     @csrf
@@ -62,14 +64,15 @@
                 </p>
             </div>
             <!-- Register Form (Right) -->
-            <div class="flex flex-col justify-center p-8 text-white absolute inset-0 md:static bg-white/5 md:border-l md:border-white/10"
-                 x-show="isRegister"
-                 x-transition:enter="transition transform duration-500"
-                 x-transition:enter-start="opacity-0 translate-x-8"
-                 x-transition:enter-end="opacity-100 translate-x-0"
-                 x-transition:leave="transition transform duration-500"
-                 x-transition:leave-start="opacity-100 translate-x-0"
-                 x-transition:leave-end="opacity-0 translate-x-8">
+            <div 
+                class="flex flex-col justify-center p-8 text-white transition-all duration-500 md:static absolute inset-0 md:bg-white/5 md:border-l md:border-white/10"
+                :class="{
+                    'opacity-100 pointer-events-auto z-10 md:z-0': isRegister,
+                    'opacity-0 pointer-events-none z-0 md:z-0': !isRegister,
+                    'md:opacity-100 md:pointer-events-auto': true
+                }"
+                x-cloak
+            >
                 <h2 class="text-3xl font-bold mb-6 text-center">Buat Akun Baru</h2>
                 <form method="POST" action="{{ route('register') }}" class="space-y-4">
                     @csrf
@@ -89,12 +92,22 @@
             </div>
         </div>
         <!-- Overlay Motivasi (Desktop Only, absolute, tidak menutupi form) -->
+        
         <div class="hidden md:block pointer-events-none absolute inset-0 z-0">
-            <template x-if="isRegister">
-                <div class="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-br from-purple-600 to-blue-500 flex flex-col items-center justify-center p-8 text-white text-center rounded-l-2xl">
+            <div class="absolute top-0 left-0 w-1/2 h-full"
+                x-show="isRegister"
+                x-transition:enter="transition-all duration-500"
+                x-transition:enter-start="translate-x-full opacity-0"
+                x-transition:enter-end="translate-x-0 opacity-100"
+                x-transition:leave="transition-all duration-500"
+                x-transition:leave-start="translate-x-0 opacity-100"
+                x-transition:leave-end="translate-x-full opacity-0"
+            >
+                <div class="bg-gradient-to-br from-purple-600 to-blue-500 flex flex-col items-center justify-center p-8 text-white text-center rounded-l-2xl h-full">
                     <h2 class="text-3xl font-bold mb-2">Selamat Datang!</h2>
                     <p class="mb-6">Sudah terdaftar? Masuk untuk melanjutkan dan melihat dashboard finansialmu.</p>
                     <div class="w-full max-w-xs mb-6">
+                        <!-- SVG Chart -->
                         <svg viewBox="0 0 100 60" class="w-full">
                             <defs><linearGradient id="barGradient2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#60A5FA"/></linearGradient></defs>
                             <rect class="svg-chart-bar" style="animation-delay: 0.1s; transform-origin: bottom;" x="5" y="10" width="10" height="50" rx="3" fill="url(#barGradient2)" transform="scale(1, 0.4)"/>
@@ -107,12 +120,21 @@
                     </div>
                     <button @click="isRegister = false" class="font-semibold border-2 border-white rounded-full px-8 py-2 hover:bg-white hover:text-purple-600 transition-colors pointer-events-auto">Masuk</button>
                 </div>
-            </template>
-            <template x-if="!isRegister">
-                <div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-br from-purple-600 to-blue-500 flex flex-col items-center justify-center p-8 text-white text-center rounded-r-2xl">
+            </div>
+            <div class="absolute top-0 right-0 w-1/2 h-full"
+                x-show="!isRegister"
+                x-transition:enter="transition-all duration-500"
+                x-transition:enter-start="-translate-x-full opacity-0"
+                x-transition:enter-end="translate-x-0 opacity-100"
+                x-transition:leave="transition-all duration-500"
+                x-transition:leave-start="translate-x-0 opacity-100"
+                x-transition:leave-end="-translate-x-full opacity-0"
+            >
+                <div class="bg-gradient-to-br from-purple-600 to-blue-500 flex flex-col items-center justify-center p-8 text-white text-center rounded-r-2xl h-full">
                     <h2 class="text-3xl font-bold mb-2">Halo, Sobat Finansial!</h2>
                     <p class="mb-6">Daftar sekarang dan mulai perjalanan finansialmu untuk meraih semua tujuan.</p>
                     <div class="w-full max-w-xs mb-6">
+                        <!-- SVG Chart -->
                         <svg viewBox="0 0 100 60" class="w-full">
                             <defs><linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#60A5FA"/></linearGradient></defs>
                             <rect class="svg-chart-bar" style="animation-delay: 0.1s; transform-origin: bottom;" x="5" y="10" width="10" height="50" rx="3" fill="url(#barGradient)" transform="scale(1, 0.4)"/>
@@ -125,7 +147,7 @@
                     </div>
                     <button @click="isRegister = true" class="font-semibold border-2 border-white rounded-full px-8 py-2 hover:bg-white hover:text-purple-600 transition-colors pointer-events-auto">Daftar</button>
                 </div>
-            </template>
+            </div>
         </div>
     </div>
 </div>
