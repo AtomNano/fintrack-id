@@ -39,38 +39,4 @@
 <div class="flex items-center justify-end space-x-3">
     <button type="button" class="close-modal text-gray-600 hover:text-gray-800 font-bold py-2 px-4 rounded">Batal</button>
     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Simpan</button>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const typeRadios = document.querySelectorAll('input[name="type"]');
-    const categorySelect = document.getElementById('category_id');
-    const allOptions = Array.from(categorySelect.options);
-
-    function filterCategories() {
-        const selectedType = document.querySelector('input[name="type"]:checked').value;
-        const currentCategoryValue = categorySelect.value;
-        
-        // Clear select
-        categorySelect.innerHTML = '';
-
-        // Add back relevant options
-        allOptions.forEach(option => {
-            if (option.value === "" || option.dataset.type === selectedType) {
-                categorySelect.add(option);
-            }
-        });
-        
-        // Reselect if possible
-        const newOptionExists = Array.from(categorySelect.options).some(opt => opt.value === currentCategoryValue);
-        if(newOptionExists) {
-             categorySelect.value = currentCategoryValue;
-        } else {
-            categorySelect.value = "";
-        }
-    }
-
-    typeRadios.forEach(radio => radio.addEventListener('change', filterCategories));
-    filterCategories(); // Initial filter on page load
-});
-</script> 
+</div> 

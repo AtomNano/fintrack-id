@@ -135,7 +135,62 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.overflow = 'auto';
     }
 
+    function setupCategoryFilter(form) {
+        const typeRadios = form.querySelectorAll('input[name="type"]');
+        const categorySelect = form.querySelector('select[name="category_id"]');
+        if (!categorySelect || categorySelect.dataset.allOptions) { // if no select or already initialized
+            return;
+        }
+
+        const allOptions = Array.from(categorySelect.options).map(opt => ({
+            value: opt.value,
+            text: opt.text,
+            type: opt.dataset.type
+        }));
+        categorySelect.dataset.allOptions = JSON.stringify(allOptions);
+
+        function filterCategories() {
+            const selectedType = form.querySelector('input[name="type"]:checked').value;
+            const currentCategoryValue = categorySelect.value;
+            
+            categorySelect.innerHTML = '';
+
+            JSON.parse(categorySelect.dataset.allOptions).forEach(optionData => {
+                if (optionData.value === "" || optionData.type === selectedType) {
+                    const option = new Option(optionData.text, optionData.value);
+                    option.dataset.type = optionData.type;
+                    categorySelect.add(option);
+                }
+            });
+            
+            const newOptionExists = Array.from(categorySelect.options).some(opt => opt.value === currentCategoryValue);
+            if(newOptionExists) {
+                categorySelect.value = currentCategoryValue;
+            } else {
+                categorySelect.value = "";
+            }
+        }
+
+        typeRadios.forEach(radio => radio.addEventListener('change', filterCategories));
+        form.filterCategories = filterCategories; // Attach filter function to the form
+    }
+
+    // Setup for both modals
+    setupCategoryFilter(createModal.querySelector('form'));
+    setupCategoryFilter(editModal.querySelector('form'));
+
     addBtn.addEventListener('click', () => {
+        const form = createModal.querySelector('form');
+        form.reset();
+        
+        // set defaults
+        form.querySelector('input[name="type"][value="expense"]').checked = true;
+        form.querySelector('input[name="transaction_date"]').value = "{{ now()->format('Y-m-d') }}";
+        
+        if (form.filterCategories) {
+            form.filterCategories();
+        }
+
         openModal(createModal);
     });
 
@@ -145,12 +200,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const form = editModal.querySelector('form');
 
             form.action = data.action;
-            form.querySelector('select[name="type"]').value = data.type;
+            form.querySelector(`input[name="type"][value="${data.type}"]`).checked = true;
             form.querySelector('input[name="amount"]').value = data.amount;
-            form.querySelector('select[name="category_id"]').value = data.category_id;
             form.querySelector('select[name="account_id"]').value = data.account_id;
             form.querySelector('input[name="transaction_date"]').value = data.transaction_date;
             form.querySelector('textarea[name="description"]').value = data.description;
+            
+            // Filter categories based on type, then set category
+            if (form.filterCategories) {
+                form.filterCategories();
+            }
+            form.querySelector('select[name="category_id"]').value = data.category_id;
             
             openModal(editModal);
         });
@@ -186,4 +246,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-@endpush 
+@endpush

@@ -194,7 +194,7 @@
                                     </a>
                                     <a href="{{ route('accounts.index') }}" class="nav-link {{ request()->routeIs('accounts.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-wallet text-blue-300"></i>
-                                        <span>Akun Saya</span>
+                                        <span>Akun Bank Saya</span>
                                     </a>
                                     <a href="{{ route('transactions.index') }}" class="nav-link {{ request()->routeIs('transactions.*') ? 'active' : '' }} text-white/90 hover:text-white font-medium flex items-center space-x-2">
                                         <i class="fas fa-exchange-alt text-purple-300"></i>
@@ -308,7 +308,7 @@
         <footer class="bg-white shadow-inner mt-auto">
             <div class="container mx-auto px-4 py-6 text-center text-gray-600">
                 <p>&copy; {{ date('Y') }} FinTrack ID. All Rights Reserved.</p>
-                <p class="text-sm">Created with <i class="fas fa-heart text-red-500"></i> by Luthfi</p>
+                <p class="text-sm">Created by Luthfi</p>
             </div>
         </footer>
 
