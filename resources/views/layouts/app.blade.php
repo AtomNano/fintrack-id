@@ -120,9 +120,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <div id="app" class="flex flex-col min-h-screen">
+<body class="w-screen min-h-screen bg-[#141332]">
+    <div id="app" class="flex flex-col min-h-screen w-screen">
         <!-- Navigation -->
+        @if (!request()->routeIs('dashboard'))
         <nav class="gradient-bg financial-pattern shadow-xl sticky top-0 z-40" style="background: rgba(30, 58, 138, 0.95);">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center py-4">
@@ -235,6 +236,7 @@
                 </div>
             </div>
         </nav>
+        @endif
 
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="mobile-menu lg:hidden fixed top-0 right-0 w-80 h-full bg-white shadow-2xl z-50">
@@ -300,7 +302,7 @@
 
         <!-- Main Content -->
         <main class="py-10 flex-grow">
-            <div class="container mx-auto px-4">
+            <div class="w-full px-4">
                 @yield('content')
             </div>
         </main>

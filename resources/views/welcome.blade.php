@@ -3,7 +3,7 @@
 @section('title', 'Selamat Datang di FinTrack ID')
 
 @section('content')
-<div class="bg-white">
+<div class="bg-white w-screen min-h-screen">
     <!-- Hero Section -->
     <div class="bg-gray-50">
         <div class="container mx-auto px-6 py-20 text-center">
