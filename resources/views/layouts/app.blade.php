@@ -42,7 +42,7 @@
     <div id="app" class="min-h-screen flex flex-col">
         <!-- Navigation -->
         <nav class="bg-white/5 backdrop-blur-md sticky top-0 z-40 border-b border-white/10">
-            <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-between items-center h-20">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-3">
                         <div class="bg-purple-500/20 text-purple-400 p-2 rounded-lg">
@@ -56,8 +56,8 @@
                     <div class="hidden lg:flex items-center space-x-8">
                         @auth
                             <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
-                            <a href="{{ route('transactions.index') }}" class="text-gray-300 hover:text-white transition-colors">Transactions</a>
-                            <a href="{{ route('budgets.index') }}" class="text-gray-300 hover:text-white transition-colors">Budgets</a>
+                            <a href="{{ route('transactions.index') }}" class="text-gray-300 hover:text-white transition-colors">Transaksi</a>
+                            <a href="{{ route('budgets.index') }}" class="text-gray-300 hover:text-white transition-colors">Anggaran</a>
                             
                             <div class="relative dropdown">
                                 <button class="flex items-center space-x-2 text-white">
@@ -66,11 +66,11 @@
                                 </button>
                                 <div class="dropdown-menu absolute right-0 top-full mt-3 w-48 bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-white/10 py-2 z-50">
                                     <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-white/10 transition-colors">
-                                        <i class="fas fa-user-cog w-6"></i> Profile
+                                        <i class="fas fa-user-cog w-6"></i> Profil
                                     </a>
                                     <hr class="border-white/10 my-1">
                                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-red-400 hover:bg-white/10 transition-colors">
-                                        <i class="fas fa-sign-out-alt w-6"></i> Logout
+                                        <i class="fas fa-sign-out-alt w-6"></i> Keluar
                                     </a>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                     <div class="space-y-4">
                         @if (Route::has('auth'))
                             <a href="{{ route('auth') }}" class="block p-4 {{ request()->routeIs('auth') ? 'bg-gradient-to-r from-green-500 to-blue-600' : 'bg-gradient-to-r from-blue-500 to-purple-600' }} text-white rounded-xl">
-                                <i class="fas fa-sign-in-alt mr-3"></i>Login / Register
+                                <i class="fas fa-sign-in-alt mr-3"></i>Masuk / Daftar
                             </a>
                         @endif
                     </div>
@@ -108,10 +108,10 @@
                     <div class="space-y-3">
                         @if (Auth::user()->role === 'admin')
                             <a href="{{ route('admin.dashboard') }}" class="block p-3 {{ request()->routeIs('admin.dashboard') ? 'bg-green-100 border-l-4 border-green-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-tachometer-alt mr-3 text-green-500"></i>Admin Dashboard
+                                <i class="fas fa-tachometer-alt mr-3 text-green-500"></i>Dashboard Admin
                             </a>
                             <a href="{{ route('admin.users.index') }}" class="block p-3 {{ request()->routeIs('admin.users.*') ? 'bg-blue-100 border-l-4 border-blue-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-users mr-3 text-blue-500"></i>Kelola User
+                                <i class="fas fa-users mr-3 text-blue-500"></i>Kelola Pengguna
                             </a>
                             <a href="{{ route('admin.categories.index') }}" class="block p-3 {{ request()->routeIs('admin.categories.*') ? 'bg-purple-100 border-l-4 border-purple-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
                                 <i class="fas fa-tags mr-3 text-purple-500"></i>Kelola Kategori
@@ -132,7 +132,7 @@
                         @endif
                         <hr class="my-4">
                         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block p-3 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                            <i class="fas fa-sign-out-alt mr-3"></i>Logout
+                            <i class="fas fa-sign-out-alt mr-3"></i>Keluar
                         </a>
                     </div>
                 @endguest

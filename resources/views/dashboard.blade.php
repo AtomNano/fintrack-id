@@ -3,27 +3,28 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="min-h-screen glassmorphism">
-    <div class="max-w-7xl mx-auto px-6 py-8">
+<div class="min-h-screen glassmorphism flex flex-col items-center py-8">
+    <!-- Container dengan lebar maksimal agar dashboard tidak sejajar penuh dengan navbar -->
+    <div class="max-w-8xl mx-auto px-4">
         <!-- Header Section -->
-        <div class="flex justify-between items-center mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
                 <h1 class="text-3xl font-bold text-white mb-2">
-                    Welcome Back, {{ Auth::user()->name }} 👋
+                    Selamat Datang, {{ Auth::user()->name }} 👋
                 </h1>
-                <p class="text-gray-300">Here's what's happening with your financial data today.</p>
+                <p class="text-gray-300">Berikut adalah ringkasan data keuangan Anda hari ini.</p>
             </div>
-            <div class="relative">
+            <div class="relative w-full md:w-auto">
                 <input type="text" 
                        placeholder="Search for anything..." 
-                       class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-2 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 w-64">
+                       class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-2 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-64">
                 <i class="fas fa-search absolute right-3 top-3 text-gray-300"></i>
             </div>
         </div>
 
         <!-- Quick Access Section -->
         <div class="mb-8">
-            <h2 class="text-xl font-bold text-white mb-4">Quick Access</h2>
+            <h2 class="text-xl font-bold text-white mb-4">Akses Cepat</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Transaction Management Card -->
                 <a href="{{ route('transactions.index') }}" class="block bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group">
@@ -32,8 +33,8 @@
                             <i class="fa-solid fa-money-bill-transfer fa-lg"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Transaction Management</h3>
-                            <p class="text-gray-300">View, add, edit, and delete your transactions.</p>
+                            <h3 class="text-xl font-bold text-white">Kelola Transaksi</h3>
+                            <p class="text-gray-300">Lihat, tambah, edit, dan hapus transaksi Anda.</p>
                         </div>
                     </div>
                 </a>
@@ -45,8 +46,8 @@
                             <i class="fa-solid fa-bullseye fa-lg"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Budget Management</h3>
-                            <p class="text-gray-300">Set monthly budget for each category.</p>
+                            <h3 class="text-xl font-bold text-white">Kelola Anggaran</h3>
+                            <p class="text-gray-300">Atur anggaran bulanan untuk setiap kategori.</p>
                         </div>
                     </div>
                 </a>
@@ -62,7 +63,7 @@
                     <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-300 text-sm">Total Income</p>
+                                <p class="text-gray-300 text-sm">Total Pemasukan</p>
                                 <h3 class="text-2xl font-bold text-white">Rp {{ number_format($totalIncome, 0, ',', '.') }}</h3>
                                 <span class="text-green-400 text-sm">+1.2% ↗</span>
                             </div>
@@ -76,7 +77,7 @@
                     <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-300 text-sm">Total Outcome</p>
+                                <p class="text-gray-300 text-sm">Total Pengeluaran</p>
                                 <h3 class="text-2xl font-bold text-white">Rp {{ number_format($totalExpense, 0, ',', '.') }}</h3>
                                 <span class="text-red-400 text-sm">-1.2% ↘</span>
                             </div>
@@ -90,15 +91,15 @@
                 <!-- Analytics Chart -->
                 <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-bold text-white">Analytics</h3>
+                        <h3 class="text-xl font-bold text-white">Analitik</h3>
                         <div class="flex items-center space-x-4">
                             <div class="flex items-center space-x-2">
                                 <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300 text-sm">Income</span>
+                                <span class="text-gray-300 text-sm">Pemasukan</span>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <div class="w-3 h-3 bg-cyan-500 rounded-full"></div>
-                                <span class="text-gray-300 text-sm">Outcome</span>
+                                <span class="text-gray-300 text-sm">Pengeluaran</span>
                             </div>
                             <select class="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm">
                                 <option>2024</option>
@@ -114,16 +115,16 @@
                 <!-- Transaction Table -->
                 <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-bold text-white">Transaction</h3>
+                        <h3 class="text-xl font-bold text-white">Transaksi</h3>
                         <div class="flex items-center space-x-4">
                             <div class="relative">
                                 <input type="text" 
-                                       placeholder="Search for anything..." 
+                                       placeholder="Cari apapun..." 
                                        class="bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-48">
                                 <i class="fas fa-search absolute right-3 top-2.5 text-gray-300 text-sm"></i>
                             </div>
                             <select class="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm">
-                                <option>10 May - 20 May</option>
+                                <option>10 Mei - 20 Mei</option>
                             </select>
                         </div>
                     </div>
@@ -132,9 +133,9 @@
                         <table class="w-full text-left">
                             <thead>
                                 <tr class="text-gray-300 text-sm">
-                                    <th class="pb-4">Name</th>
-                                    <th class="pb-4">Date</th>
-                                    <th class="pb-4">Amount</th>
+                                    <th class="pb-4">Nama</th>
+                                    <th class="pb-4">Tanggal</th>
+                                    <th class="pb-4">Jumlah</th>
                                     <th class="pb-4">Status</th>
                                 </tr>
                             </thead>
@@ -168,8 +169,8 @@
                 </div>
             </div>
 
-            <!-- Right Column - Sidebar -->
-            <div class="space-y-6 h-full flex flex-col w-full max-w-sm lg:mx-0">
+            <!-- Sidebar Desktop -->
+            <div class="space-y-6 h-full flex flex-col w-full max-w-sm lg:mx-0 lg:flex hidden">
                 <!-- My Card -->
                 <div class="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl p-6 text-white relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
@@ -178,8 +179,8 @@
                     <div class="relative z-10">
                         <div class="flex justify-between items-start mb-6">
                             <div>
-                                <h3 class="text-lg font-bold">My Card</h3>
-                                <p class="text-purple-200 text-sm">Card Balance</p>
+                                <h3 class="text-lg font-bold">Kartu Saya</h3>
+                                <p class="text-purple-200 text-sm">Saldo Kartu</p>
                                 <h2 class="text-2xl font-bold">Rp {{ number_format($totalBalance, 0, ',', '.') }}</h2>
                             </div>
                             <div class="flex space-x-1">
@@ -194,7 +195,7 @@
                     </div>
 
                     <div class="mb-6">
-                        <p class="text-lg font-bold">Current Balance</p>
+                        <p class="text-lg font-bold">Saldo Saat Ini</p>
                         <p class="text-2xl font-bold">Rp {{ number_format($totalBalance - $totalExpense + $totalIncome, 0, ',', '.') }}</p>
                     </div>
                     
@@ -204,23 +205,23 @@
                     </div>
                     
                     <div class="flex space-x-3 mt-4">
-                        <button class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-lg text-sm font-medium">
-                            Manage Cards
-                        </button>
-                        <button class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-lg text-sm font-medium">
+                        <a href="{{ route('accounts.index') }}" class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-lg text-sm font-medium">
+                            Kelola Kartu
+                        </a>
+                        <a href="{{ route('transactions.create') }}" class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-lg text-sm font-medium">
                             Transfer
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Activity Card -->
                 <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-bold text-white">Activity</h3>
+                        <h3 class="text-xl font-bold text-white">Aktivitas</h3>
                         <select class="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm">
-                            <option>Month</option>
-                            <option>Week</option>
-                            <option>Year</option>
+                            <option>Bulan</option>
+                            <option>Minggu</option>
+                            <option>Tahun</option>
                         </select>
                     </div>
                     
@@ -237,21 +238,21 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
                                 <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
-                                <span class="text-gray-300 text-sm">Daily payment</span>
+                                <span class="text-gray-300 text-sm">Pembayaran Harian</span>
                             </div>
                             <span class="text-white font-medium">55%</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
                                 <div class="w-3 h-3 bg-cyan-500 rounded-full"></div>
-                                <span class="text-gray-300 text-sm">Hobby</span>
+                                <span class="text-gray-300 text-sm">Hobi</span>
                             </div>
                             <span class="text-white font-medium">20%</span>
                         </div>
                     </div>
                     
                     <button class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-lg py-3 text-white font-medium mt-6 hover:bg-white/20 transition-colors">
-                        View all activity →
+                        Lihat semua aktivitas →
                     </button>   
                 </div>
             </div>
@@ -342,4 +343,4 @@
         }
     });
 </script>
-@endsection 
+@endsection
