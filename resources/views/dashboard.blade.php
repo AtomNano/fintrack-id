@@ -5,7 +5,7 @@
 @section('content')
 <div class="min-h-screen glassmorphism flex flex-col items-center py-8">
     <!-- Container dengan lebar maksimal agar dashboard tidak sejajar penuh dengan navbar -->
-    <div class="max-w-8xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4 py-8">
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
@@ -183,25 +183,13 @@
                                 <p class="text-purple-200 text-sm">Saldo Kartu</p>
                                 <h2 class="text-2xl font-bold">Rp {{ number_format($totalBalance, 0, ',', '.') }}</h2>
                             </div>
-                            <div class="flex space-x-1">
-                                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                                    <span class="text-white text-xs font-bold">M</span>
-                                </div>
-                                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                                    <span class="text-white text-xs font-bold">C</span>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
 
                     <div class="mb-6">
                         <p class="text-lg font-bold">Saldo Saat Ini</p>
                         <p class="text-2xl font-bold">Rp {{ number_format($totalBalance - $totalExpense + $totalIncome, 0, ',', '.') }}</p>
-                    </div>
-                    
-                    <div class="flex justify-between items-center text-sm">
-                        <span>5282 3456 7890 1289</span>
-                        <span>09/25</span>
                     </div>
                     
                     <div class="flex space-x-3 mt-4">
@@ -229,26 +217,21 @@
                         <canvas id="activityChart"></canvas>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-white">75%</div>
+                                
                             </div>
                         </div>
                     </div>
                     
                     <div class="space-y-3">
+                        @foreach($expensePercentages as $item)
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
                                 <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
-                                <span class="text-gray-300 text-sm">Pembayaran Harian</span>
+                                <span class="text-gray-300 text-sm">{{ $item['name'] }}</span>
                             </div>
-                            <span class="text-white font-medium">55%</span>
+                            <span class="text-white font-medium">{{ $item['percentage'] }}%</span>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-3 h-3 bg-cyan-500 rounded-full"></div>
-                                <span class="text-gray-300 text-sm">Hobi</span>
-                            </div>
-                            <span class="text-white font-medium">20%</span>
-                        </div>
+                        @endforeach
                     </div>
                     
                     <button class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-lg py-3 text-white font-medium mt-6 hover:bg-white/20 transition-colors">
@@ -321,12 +304,11 @@
     new Chart(activityCtx, {
         type: 'doughnut',
         data: {
+            labels: @json(array_column($expensePercentages, 'name')),
             datasets: [{
-                data: [55, 20, 25],
+                data: @json(array_column($expensePercentages, 'percentage')),
                 backgroundColor: [
-                    '#8B5CF6',
-                    '#06B6D4',
-                    '#374151'
+                    '#8B5CF6', '#06B6D4', '#F59E42', '#F43F5E', '#10B981', '#FBBF24', '#6366F1', '#A3E635', '#F472B6', '#374151'
                 ],
                 borderWidth: 0,
                 cutout: '70%'
@@ -337,7 +319,20 @@
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    display: false
+                    display: true,
+                    labels: {
+                        color: '#fff',
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.parsed || 0;
+                            return label + ': ' + value + '%';
+                        }
+                    }
                 }
             }
         }

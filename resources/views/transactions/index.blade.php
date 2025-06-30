@@ -4,7 +4,7 @@
 @section('title', 'Daftar Transaksi')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 py-8">
+<div class="max-w-7xl mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold mb-4 text-white">Daftar Transaksi</h1>
     <div class="flex justify-end mb-4">
         <button id="add-transaction-btn" class="bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-lg border border-white/20 transition">
@@ -47,7 +47,7 @@
                                     data-action="{{ route('transactions.update', $transaction) }}">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
-                            <form action="{{ route('transactions.destroy', $transaction) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?');">
+                            <form action="{{ route('transactions.destroy', $transaction) }}" method="POST" class="inline-block delete-form">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-white/10 hover:bg-white/20 text-red-400 font-bold py-1 px-3 rounded-lg border border-white/20 transition ml-2"><i class="fas fa-trash"></i> Hapus</button>
@@ -69,15 +69,15 @@
 </div>
 
 {{-- Create Modal --}}
-<div id="create-modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+<div id="create-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative z-10">
+        <div class="inline-block align-bottom bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white shadow-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full z-10">
             <form action="{{ route('transactions.store') }}" method="POST">
                 @csrf
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div>
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-white mb-4">
                                 Tambah Transaksi Baru
                             </h3>
                             <div class="mt-2">
@@ -92,16 +92,16 @@
 </div>
 
 {{-- Edit Modal --}}
-<div id="edit-modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+<div id="edit-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative z-10">
+        <div class="inline-block align-bottom bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white shadow-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full z-10">
             <form method="POST">
                 @csrf
                 @method('PUT')
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div>
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-white mb-4">
                                 Edit Transaksi
                             </h3>
                             <div class="mt-2">
@@ -117,6 +117,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const createModal = document.getElementById('create-modal');
@@ -243,6 +244,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 closeModal(editModal);
             }
         }
+    });
+
+    // SweetAlert2 for delete
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: 'Transaksi yang dihapus tidak dapat dikembalikan!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
     });
 });
 </script>
