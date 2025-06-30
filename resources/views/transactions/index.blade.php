@@ -266,6 +266,17 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    // SweetAlert2 for success flash message
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: @json(session('success')),
+            timer: 2000,
+            showConfirmButton: false
+        });
+    @endif
 });
 </script>
 @endpush
