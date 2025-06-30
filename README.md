@@ -17,88 +17,86 @@ This project was built from scratch using Laravel 10 without any starter kits li
 
 ## Key Features
 
-### For Users:
-- **Secure Authentication**: Manual login, registration, and logout system.
-- **Dashboard**: An at-a-glance summary of monthly income, expenses, and total balance. Includes a 30-day expense chart powered by Chart.js and financial insights like the top spending category.
-- **Account Management**: CRUD functionality to manage various financial accounts (e.g., Bank, E-Wallet, Cash).
-- **Transaction Tracking**: Full CRUD for logging income and expense transactions, which automatically update account balances. Includes filtering by month, year, and category.
-- **Budgeting**: Set monthly spending limits for different expense categories and track progress.
-- **Category Management**: Users can define their own personal spending/income categories.
+### For Users
+- **Secure Authentication:** Manual login, registration, and logout system.
+- **Dashboard:** Summary of monthly income, expenses, and total balance. Includes a 30-day expense chart (Chart.js) and financial insights.
+- **Account Management:** CRUD for various financial accounts (Bank, E-Wallet, Cash, etc).
+- **Transaction Tracking:** Full CRUD for income and expense transactions, with automatic account balance updates. Filter by month, year, and category.
+- **Budgeting:** Set monthly spending limits for each expense category and track progress.
+- **Category Management:** Users can define their own personal spending/income categories.
 
-### For Admins:
-- **Admin Panel**: A separate section for site administration.
-- **User Management**: Full CRUD capabilities to manage all registered users.
-- **Global Category Management**: Admins can create and manage a set of default categories available to all users.
+### For Admins
+- **Admin Panel:** Separate section for site administration.
+- **User Management:** Full CRUD for all registered users.
+- **Global Category Management:** Admins can create and manage default categories available to all users.
 
 ## Technology Stack
 
-- **Backend**: Laravel 10, PHP
-- **Frontend**: Blade, Tailwind CSS, Vite.js, Chart.js
-- **Database**: MySQL (or any Laravel-supported SQL database)
+- **Backend:** Laravel 10, PHP
+- **Frontend:** Blade, Tailwind CSS, Vite.js, Chart.js
+- **Database:** MySQL (or any Laravel-supported SQL database)
 
 ## Getting Started
 
-Follow these instructions to get the project up and running on your local machine.
+Follow these steps to set up the project locally.
 
 ### Prerequisites
 - PHP >= 8.2
 - Composer
 - Node.js & NPM
-- A database server (e.g., MySQL, MariaDB)
+- Database server (MySQL, MariaDB, etc.)
 
 ### Installation Steps
 
-1.  **Clone the repository:**
+1. **Clone the repository:**
     ```bash
     git clone https://github.com/your-username/fintrack-id.git
     cd fintrack-id
     ```
 
-2.  **Install PHP dependencies:**
+2. **Install PHP dependencies:**
     ```bash
     composer install
     ```
 
-3.  **Install NPM dependencies:**
+3. **Install NPM dependencies:**
     ```bash
     npm install
     ```
 
-4.  **Set up your environment file:**
-    Copy the example `.env` file and generate an application key.
+4. **Set up your environment file:**
     ```bash
     cp .env.example .env
     php artisan key:generate
     ```
 
-5.  **Configure your database:**
-    Open the `.env` file and set your database connection details (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
+5. **Configure your database:**
+    Edit `.env` and set your database connection (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
 
-6.  **Run the database migrations and seeders:**
-    This will create the necessary tables and populate them with default global categories and two sample users (an admin and a regular user).
+6. **Run migrations and seeders:**
+    This will create tables and populate them with default global categories and two sample users (admin and regular user).
     ```bash
     php artisan migrate --seed
     ```
 
-7.  **Build frontend assets:**
+7. **Build frontend assets:**
     ```bash
     npm run dev
     ```
 
-8.  **Serve the application:**
+8. **Serve the application:**
     ```bash
     php artisan serve
     ```
-    The application will be available at `http://127.0.0.1:8000`.
+    The app will be available at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ### Default Login Credentials
 
-The database seeder creates two users for you to test with:
+Seeder creates two users for testing:
 
--   **Admin User**
-    -   **Email**: `admin@fintrack.id`
-    -   **Password**: `password`
-
--   **Regular User**
-    -   **Email**: `user@fintrack.id`
-    -   **Password**: `password`
+- **Admin User**
+    - Email: `admin@fintrack.id`
+    - Password: `password`
+- **Regular User**
+    - Email: `user@fintrack.id`
+    - Password: `password`
