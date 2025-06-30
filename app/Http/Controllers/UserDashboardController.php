@@ -77,6 +77,13 @@ class UserDashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Ambil daftar tahun dari transaksi user
+        $years = Transaction::where('user_id', $user->id)
+            ->selectRaw('YEAR(transaction_date) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
         // Ambil total pemasukan per kategori bulan ini
         $incomeByCategory = Transaction::where('luthfi_transactions.user_id', $user->id)
             ->where('luthfi_transactions.type', 'income')
@@ -121,7 +128,8 @@ class UserDashboardController extends Controller
             'topCategory',
             'recentTransactions',
             'incomePercentages',
-            'expensePercentages'
+            'expensePercentages',
+            'years'
         ));
     }
 } 

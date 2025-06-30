@@ -81,7 +81,7 @@
                                 Tambah Transaksi Baru
                             </h3>
                             <div class="mt-2">
-                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts])
+                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts, 'transaction' => null])
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                                 Edit Transaksi
                             </h3>
                             <div class="mt-2">
-                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts])
+                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts, 'transaction' => null])
                             </div>
                         </div>
                     </div>

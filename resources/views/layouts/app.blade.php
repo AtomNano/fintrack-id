@@ -55,9 +55,10 @@
 
                     <div class="hidden lg:flex items-center space-x-8">
                         @auth
-                            <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
-                            <a href="{{ route('transactions.index') }}" class="text-gray-300 hover:text-white transition-colors">Transaksi</a>
-                            <a href="{{ route('budgets.index') }}" class="text-gray-300 hover:text-white transition-colors">Anggaran</a>
+                            <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-tachometer-alt mr-2 text-green-400"></i>Dashboard</a>
+                            <a href="{{ route('transactions.index') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-exchange-alt mr-2 text-purple-400"></i>Transaksi</a>
+                            <a href="{{ route('accounts.index') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-wallet mr-2 text-blue-400"></i>Kelola Kartu</a>
+                            <a href="{{ route('budgets.index') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-chart-pie mr-2 text-yellow-400"></i>Anggaran</a>
                             
                             <div class="relative dropdown">
                                 <button class="flex items-center space-x-2 text-white">
@@ -65,9 +66,7 @@
                                     <i class="fas fa-chevron-down text-xs"></i>
                                 </button>
                                 <div class="dropdown-menu absolute right-0 top-full mt-3 w-48 bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-white/10 py-2 z-50">
-                                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-white/10 transition-colors">
-                                        <i class="fas fa-user-cog w-6"></i> Profil
-                                    </a>
+                                    
                                     <hr class="border-white/10 my-1">
                                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-red-400 hover:bg-white/10 transition-colors">
                                         <i class="fas fa-sign-out-alt w-6"></i> Keluar
@@ -85,11 +84,11 @@
         </nav>
 
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="mobile-menu lg:hidden fixed top-0 right-0 w-80 h-full bg-white shadow-2xl z-50">
+        <div id="mobileMenu" class="mobile-menu lg:hidden fixed top-0 right-0 w-80 h-full bg-black/80 backdrop-blur-xl border-l border-white/10 z-50 transition-transform duration-300 translate-x-full">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-8">
-                    <h3 class="text-xl font-bold text-gray-800">Menu</h3>
-                    <button id="closeMobileMenu" class="text-gray-500 hover:text-gray-700">
+                    <h3 class="text-xl font-bold text-white">Menu</h3>
+                    <button id="closeMobileMenu" class="text-gray-300 hover:text-white">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
@@ -107,31 +106,31 @@
                     <!-- Mobile User Menu -->
                     <div class="space-y-3">
                         @if (Auth::user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}" class="block p-3 {{ request()->routeIs('admin.dashboard') ? 'bg-green-100 border-l-4 border-green-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-tachometer-alt mr-3 text-green-500"></i>Dashboard Admin
+                            <a href="{{ route('admin.dashboard') }}" class="block p-3 {{ request()->routeIs('admin.dashboard') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
+                                <i class="fas fa-tachometer-alt mr-3 text-green-400"></i>Dashboard Admin
                             </a>
-                            <a href="{{ route('admin.users.index') }}" class="block p-3 {{ request()->routeIs('admin.users.*') ? 'bg-blue-100 border-l-4 border-blue-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-users mr-3 text-blue-500"></i>Kelola Pengguna
+                            <a href="{{ route('admin.users.index') }}" class="block p-3 {{ request()->routeIs('admin.users.*') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
+                                <i class="fas fa-users mr-3 text-blue-400"></i>Kelola Pengguna
                             </a>
-                            <a href="{{ route('admin.categories.index') }}" class="block p-3 {{ request()->routeIs('admin.categories.*') ? 'bg-purple-100 border-l-4 border-purple-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-tags mr-3 text-purple-500"></i>Kelola Kategori
+                            <a href="{{ route('admin.categories.index') }}" class="block p-3 {{ request()->routeIs('admin.categories.*') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
+                                <i class="fas fa-tags mr-3 text-purple-400"></i>Kelola Kategori
                             </a>
                         @else
-                            <a href="{{ route('dashboard') }}" class="block p-3 {{ request()->routeIs('dashboard') ? 'bg-green-100 border-l-4 border-green-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-tachometer-alt mr-3 text-green-500"></i>Dashboard
+                            <a href="{{ route('dashboard') }}" class="block p-3 {{ request()->routeIs('dashboard') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
+                                <i class="fas fa-tachometer-alt mr-3 text-green-400"></i>Dashboard
                             </a>
-                            <a href="{{ route('accounts.index') }}" class="block p-3 {{ request()->routeIs('accounts.*') ? 'bg-blue-100 border-l-4 border-blue-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-wallet mr-3 text-blue-500"></i>Akun Saya
+                            <a href="{{ route('accounts.index') }}" class="block p-3 {{ request()->routeIs('accounts.index') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
+                                <i class="fas fa-wallet mr-3 text-blue-400"></i>Kelola Kartu
                             </a>
-                            <a href="{{ route('transactions.index') }}" class="block p-3 {{ request()->routeIs('transactions.*') ? 'bg-purple-100 border-l-4 border-purple-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-exchange-alt mr-3 text-purple-500"></i>Transaksi
+                            <a href="{{ route('transactions.index') }}" class="block p-3 {{ request()->routeIs('transactions.*') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
+                                <i class="fas fa-exchange-alt mr-3 text-purple-400"></i>Transaksi
                             </a>
-                            <a href="{{ route('budgets.index') }}" class="block p-3 {{ request()->routeIs('budgets.*') ? 'bg-yellow-100 border-l-4 border-yellow-500' : 'hover:bg-gray-100' }} rounded-lg transition-colors">
-                                <i class="fas fa-chart-pie mr-3 text-yellow-500"></i>Anggaran
+                            <a href="{{ route('budgets.index') }}" class="block p-3 {{ request()->routeIs('budgets.*') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
+                                <i class="fas fa-chart-pie mr-3 text-yellow-400"></i>Anggaran
                             </a>
                         @endif
-                        <hr class="my-4">
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block p-3 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                        <hr class="my-4 border-white/20">
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block p-3 text-red-400 hover:bg-white/10 rounded-lg transition-colors">
                             <i class="fas fa-sign-out-alt mr-3"></i>Keluar
                         </a>
                     </div>
@@ -167,19 +166,21 @@
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMobileMenu = document.getElementById('closeMobileMenu');
 
-        if (mobileMenuBtn && mobileMenu && closeMobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
-            });
+        function openMobileMenu() {
+            mobileMenu.classList.remove('translate-x-full');
+        }
+        function closeMobileMenuFunc() {
+            mobileMenu.classList.add('translate-x-full');
+        }
 
-            closeMobileMenu.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-            });
+        if (mobileMenuBtn && mobileMenu && closeMobileMenu) {
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+            closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
 
             // Close mobile menu when clicking outside
             document.addEventListener('click', (e) => {
                 if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                    mobileMenu.classList.remove('active');
+                    closeMobileMenuFunc();
                 }
             });
         }

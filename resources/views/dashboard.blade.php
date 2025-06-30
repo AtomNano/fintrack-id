@@ -65,7 +65,7 @@
                             <div>
                                 <p class="text-gray-300 text-sm">Total Pemasukan</p>
                                 <h3 class="text-2xl font-bold text-white">Rp {{ number_format($totalIncome, 0, ',', '.') }}</h3>
-                                <span class="text-green-400 text-sm">+1.2% ↗</span>
+                                
                             </div>
                             <div class="bg-cyan-500/20 p-3 rounded-xl">
                                 <i class="fas fa-arrow-down text-cyan-400 text-xl"></i>
@@ -79,7 +79,7 @@
                             <div>
                                 <p class="text-gray-300 text-sm">Total Pengeluaran</p>
                                 <h3 class="text-2xl font-bold text-white">Rp {{ number_format($totalExpense, 0, ',', '.') }}</h3>
-                                <span class="text-red-400 text-sm">-1.2% ↘</span>
+                                
                             </div>
                             <div class="bg-purple-500/20 p-3 rounded-xl">
                                 <i class="fas fa-arrow-up text-purple-400 text-xl"></i>
@@ -101,10 +101,15 @@
                                 <div class="w-3 h-3 bg-cyan-500 rounded-full"></div>
                                 <span class="text-gray-300 text-sm">Pengeluaran</span>
                             </div>
-                            <select class="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm">
-                                <option>2024</option>
-                                <option>2023</option>
-                            </select>
+                            <form id="yearFilterForm" action="{{ route('transactions.index') }}" method="GET" class="inline">
+                                <input type="hidden" name="filter_year" id="filter_year_input">
+                                <select id="yearSelect" class="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm">
+                                    @foreach($years as $year)
+                                        <option value="{{ $year }}">{{ $year }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="ml-2 bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded transition">Lihat Transaksi</button>
+                            </form>
                         </div>
                     </div>
                     <div class="h-64">
@@ -113,7 +118,7 @@
                 </div>
 
                 <!-- Transaction Table -->
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">   
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold text-white">Transaksi</h3>
                         <div class="flex items-center space-x-4">
@@ -234,7 +239,7 @@
                         @endforeach
                     </div>
                     
-                    <button class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-lg py-3 text-white font-medium mt-6 hover:bg-white/20 transition-colors">
+                    <button class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-lg py-3 text-white font-medium mt-6 hover:bg-white/20 transition-colors" onclick="window.location='{{ route('transactions.index') }}'" type="button">
                         Lihat semua aktivitas →
                     </button>   
                 </div>
@@ -335,6 +340,17 @@
                     }
                 }
             }
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const yearSelect = document.getElementById('yearSelect');
+        const filterYearInput = document.getElementById('filter_year_input');
+        const yearForm = document.getElementById('yearFilterForm');
+        if (yearSelect && filterYearInput && yearForm) {
+            yearForm.addEventListener('submit', function(e) {
+                filterYearInput.value = yearSelect.value;
+            });
         }
     });
 </script>

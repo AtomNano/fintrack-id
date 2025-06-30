@@ -23,6 +23,8 @@
         font-size: 0.875rem; /* text-sm */
         margin-top: 0.5rem; /* mt-2 */
     }
+    .glass-input option, .glass-input optgroup {
+        color: #111 !important;
 </style>
 
 <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white shadow-xl">
@@ -30,10 +32,10 @@
         <label class="block text-white text-sm font-bold mb-2">Jenis Transaksi</label>
         <div class="flex gap-6 items-center">
             <label class="mr-4 flex items-center cursor-pointer">
-                <input type="radio" name="type" value="expense" @checked(old('type', $transaction->type ?? 'expense') == 'expense') class="mr-2"> Pengeluaran
+                <input type="radio" name="type" value="expense" @checked(old('type', optional($transaction)->type ?? 'expense') == 'expense') class="mr-2"> Pengeluaran
             </label>
             <label class="flex items-center cursor-pointer">
-                <input type="radio" name="type" value="income" @checked(old('type', $transaction->type ?? '') == 'income') class="mr-2"> Pemasukan
+                <input type="radio" name="type" value="income" @checked(old('type', optional($transaction)->type ?? '') == 'income') class="mr-2"> Pemasukan
             </label>
         </div>
         @error('type')
@@ -43,7 +45,7 @@
 
     <div class="mb-4">
         <label class="block text-white text-sm font-bold mb-2" for="amount">Jumlah</label>
-        <input type="number" step="any" name="amount" id="amount" value="{{ old('amount', $transaction->amount ?? '') }}" class="glass-input shadow appearance-none border rounded w-full py-2 px-3 placeholder-gray-400 @error('amount') border-red-500 @enderror" required>
+        <input type="number" step="any" name="amount" id="amount" value="{{ old('amount', optional($transaction)->amount ?? '') }}" class="glass-input shadow appearance-none border rounded w-full py-2 px-3 placeholder-gray-400 @error('amount') border-red-500 @enderror" required>
         @error('amount')
             <p class="error-message">{{ $message }}</p>
         @enderror
@@ -57,7 +59,7 @@
                 <option 
                     value="{{ $category->id }}" 
                     data-type="{{ $category->type }}" 
-                    @selected(old('category_id', $transaction->category_id ?? '') == $category->id)
+                    @selected(old('category_id', optional($transaction)->category_id ?? '') == $category->id)
                     class="category-option text-black">
                     {{ $category->name }}
                 </option>
@@ -72,7 +74,7 @@
         <label class="block text-white text-sm font-bold mb-2" for="account_id">Akun</label>
         <select name="account_id" id="account_id" class="glass-input text-black shadow appearance-none border rounded w-full py-2 px-3 placeholder-gray-400 @error('account_id') border-red-500 @enderror" required>
             @foreach($accounts as $account)
-                <option value="{{ $account->id }}" @selected(old('account_id', $transaction->account_id ?? '') == $account->id) class="text-black">
+                <option value="{{ $account->id }}" @selected(old('account_id', optional($transaction)->account_id ?? '') == $account->id) class="text-black">
                     {{ $account->name }} (Rp {{ number_format($account->balance, 0, ',', '.') }})
                 </option>
             @endforeach
@@ -84,7 +86,7 @@
 
     <div class="mb-4">
         <label class="block text-white text-sm font-bold mb-2" for="transaction_date">Tanggal</label>
-        <input type="date" name="transaction_date" id="transaction_date" value="{{ old('transaction_date', optional($transaction->transaction_date)->format('Y-m-d') ?? now()->format('Y-m-d')) }}" class="glass-input shadow appearance-none border rounded w-full py-2 px-3 placeholder-gray-400 @error('transaction_date') border-red-500 @enderror" required>
+        <input type="date" name="transaction_date" id="transaction_date" value="{{ old('transaction_date', optional(optional($transaction)->transaction_date)->format('Y-m-d') ?? now()->format('Y-m-d')) }}" class="glass-input shadow appearance-none border rounded w-full py-2 px-3 placeholder-gray-400 @error('transaction_date') border-red-500 @enderror" required>
         @error('transaction_date')
             <p class="error-message">{{ $message }}</p>
         @enderror
@@ -92,7 +94,7 @@
 
     <div class="mb-6">
         <label class="block text-white text-sm font-bold mb-2" for="description">Deskripsi</label>
-        <textarea name="description" id="description" rows="3" class="glass-input shadow appearance-none border rounded w-full py-2 px-3 placeholder-gray-400">{{ old('description', $transaction->description ?? '') }}</textarea>
+        <textarea name="description" id="description" rows="3" class="glass-input shadow appearance-none border rounded w-full py-2 px-3 placeholder-gray-400">{{ old('description', optional($transaction)->description ?? '') }}</textarea>
         @error('description')
             <p class="error-message">{{ $message }}</p>
         @enderror
