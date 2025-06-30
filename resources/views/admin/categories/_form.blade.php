@@ -26,6 +26,6 @@
 <div class="flex items-center justify-end">
     <a href="{{ route('admin.categories.index') }}" class="text-gray-600 hover:text-gray-800 font-bold py-2 px-4 rounded mr-2">Batal</a>
     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
-        {{ isset($category) ? 'Update' : 'Simpan' }} Kategori
+        {{ isset($category) ? 'Perbarui' : 'Simpan' }} Kategori
     </button>
 </div> 
