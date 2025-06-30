@@ -39,6 +39,7 @@
     </style>
 </head>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <body class="w-screen min-h-screen bg-[#141332]">
     <div id="app" class="flex flex-col min-h-screen w-screen">
         <!-- Navigation -->
@@ -54,12 +55,20 @@
 <body class="glassmorphism-bg text-gray-200 antialiased">
     <div id="app" class="min-h-screen flex flex-col">
         <!-- Navigation -->
+=======
+<body class="glassmorphism-bg text-gray-200 antialiased">
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Navigation -->
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
         <nav class="bg-white/5 backdrop-blur-md sticky top-0 z-40 border-b border-white/10">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-between items-center h-20">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-3">
                         <div class="bg-purple-500/20 text-purple-400 p-2 rounded-lg">
                             <i class="fas fa-chart-line text-xl"></i>
+<<<<<<< HEAD
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
+=======
 >>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
                         </div>
                         <span class="text-2xl font-bold text-white">
@@ -162,10 +171,16 @@
 
         <!-- Main Content -->
 <<<<<<< HEAD
+<<<<<<< HEAD
         <main class="py-10 flex-grow">
             <div class="w-full px-4">
                 @yield('content')
             </div>
+=======
+        <main class="flex-grow">
+            {{-- Konten dari setiap halaman akan dimuat di sini --}}
+            @yield('content')
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
 =======
         <main class="flex-grow">
             {{-- Konten dari setiap halaman akan dimuat di sini --}}

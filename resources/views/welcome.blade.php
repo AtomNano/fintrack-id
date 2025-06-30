@@ -4,7 +4,11 @@
 
 @section('content')
 <<<<<<< HEAD
+<<<<<<< HEAD
 <div class="bg-white w-screen min-h-screen">
+=======
+<div class="min-h-screen flex flex-col justify-center items-center">
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
 =======
 <div class="min-h-screen flex flex-col justify-center items-center">
 >>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
