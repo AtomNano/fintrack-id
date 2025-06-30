@@ -37,7 +37,7 @@ class UserController extends Controller
         // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:luthfi_users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|in:admin,user',
         ]);
@@ -78,7 +78,7 @@ class UserController extends Controller
         // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:luthfi_users,email,' . $user->id,
             'role' => 'required|in:admin,user',
             'password' => 'nullable|string|min:8|confirmed',
         ]);

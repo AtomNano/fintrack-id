@@ -4,41 +4,39 @@
 @section('title', 'Daftar Transaksi')
 
 @section('content')
-<div class="container mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Daftar Transaksi</h1>
-    <!-- buat tombol dikanan -->
-    <div class="flex justify-end">
-        <button id="add-transaction-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-4 text-white">Daftar Transaksi</h1>
+    <div class="flex justify-end mb-4">
+        <button id="add-transaction-btn" class="bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-lg border border-white/20 transition">
             <i class="fas fa-plus"></i> Tambah Transaksi Baru
         </button>
     </div>
 
-    
     {{-- Transactions Table --}}
-    <div class="bg-white shadow-md rounded my-6">
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 my-6 text-white overflow-x-auto">
         <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
+            <thead class="bg-white/10 text-white">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Akun</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
-                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tanggal</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Kategori</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Akun</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Jumlah</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-transparent text-white divide-y divide-white/10">
                 @forelse ($transactions as $transaction)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->transaction_date->format('d M Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->category->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->account->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
-                            <span class="font-semibold {{ $transaction->type == 'income' ? 'text-green-600' : 'text-red-600' }}">
+                            <span class="font-semibold {{ $transaction->type == 'income' ? 'text-green-400' : 'text-red-400' }}">
                                 {{ number_format($transaction->amount, 2) }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
-                            <button class="edit-btn text-indigo-600 hover:text-indigo-900"
+                            <button class="edit-btn bg-white/10 hover:bg-white/20 text-blue-400 font-bold py-1 px-3 rounded-lg border border-white/20 transition mr-2"
                                     data-id="{{ $transaction->id }}"
                                     data-type="{{ $transaction->type }}"
                                     data-amount="{{ $transaction->amount }}"
@@ -49,39 +47,41 @@
                                     data-action="{{ route('transactions.update', $transaction) }}">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
-                            <form action="{{ route('transactions.destroy', $transaction) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?');">
+                            <form action="{{ route('transactions.destroy', $transaction) }}" method="POST" class="inline-block delete-form">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4"><i class="fas fa-trash"></i> Hapus</button>
+                                <button type="submit" class="bg-white/10 hover:bg-white/20 text-red-400 font-bold py-1 px-3 rounded-lg border border-white/20 transition ml-2"><i class="fas fa-trash"></i> Hapus</button>
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center py-4">Tidak ada transaksi ditemukan.</td>
+                        <td colspan="5" class="text-center py-4 text-gray-300">Tidak ada transaksi ditemukan.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
 
-    {{ $transactions->links() }}
+    <div class="mt-4">
+        {{ $transactions->links() }}
+    </div>
 </div>
 
 {{-- Create Modal --}}
-<div id="create-modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+<div id="create-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative z-10">
+        <div class="inline-block align-bottom bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white shadow-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full z-10">
             <form action="{{ route('transactions.store') }}" method="POST">
                 @csrf
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div>
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-white mb-4">
                                 Tambah Transaksi Baru
                             </h3>
                             <div class="mt-2">
-                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts])
+                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts, 'transaction' => null])
                             </div>
                         </div>
                     </div>
@@ -92,20 +92,20 @@
 </div>
 
 {{-- Edit Modal --}}
-<div id="edit-modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+<div id="edit-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative z-10">
+        <div class="inline-block align-bottom bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white shadow-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full z-10">
             <form method="POST">
                 @csrf
                 @method('PUT')
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div>
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-white mb-4">
                                 Edit Transaksi
                             </h3>
                             <div class="mt-2">
-                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts])
+                                @include('transactions._form', ['categories' => $categories, 'accounts' => $accounts, 'transaction' => null])
                             </div>
                         </div>
                     </div>
@@ -117,6 +117,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const createModal = document.getElementById('create-modal');
@@ -244,6 +245,38 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+
+    // SweetAlert2 for delete
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: 'Transaksi yang dihapus tidak dapat dikembalikan!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+
+    // SweetAlert2 for success flash message
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: @json(session('success')),
+            timer: 2000,
+            showConfirmButton: false
+        });
+    @endif
 });
 </script>
 @endpush
