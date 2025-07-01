@@ -260,14 +260,14 @@
             datasets: [
                 {
                     label: 'Income',
-                    data: @json(array_map(function($val) { return $val * 1.2; }, $dailyExpenseChart['data'])),
+                    data: @json($dailyExpenseChart['income']),
                     backgroundColor: 'rgba(59, 130, 246, 0.8)',
                     borderRadius: 8,
                     maxBarThickness: 30
                 },
                 {
                     label: 'Outcome',
-                    data: @json($dailyExpenseChart['data']),
+                    data: @json($dailyExpenseChart['expense']),
                     backgroundColor: 'rgba(6, 182, 212, 0.8)',
                     borderRadius: 8,
                     maxBarThickness: 30

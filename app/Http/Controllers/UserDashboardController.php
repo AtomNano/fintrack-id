@@ -47,17 +47,32 @@ class UserDashboardController extends Controller
             ])
             ->pluck('total', 'date');
 
+        // Tambahkan: Data untuk Grafik Pemasukan Harian (30 hari terakhir)
+        $dailyIncomesQuery = Transaction::where('user_id', $user->id)
+            ->where('type', 'income')
+            ->whereBetween('transaction_date', [Carbon::now()->subDays(29), Carbon::now()])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get([
+                DB::raw('DATE(transaction_date) as date'),
+                DB::raw('SUM(amount) as total')
+            ])
+            ->pluck('total', 'date');
+
         $chartLabels = [];
-        $chartData = [];
+        $expenseChartData = [];
+        $incomeChartData = [];
         for ($i = 29; $i >= 0; $i--) {
             $date = Carbon::now()->subDays($i)->format('Y-m-d');
             $chartLabels[] = Carbon::parse($date)->format('d M');
-            $chartData[] = $dailyExpensesQuery->get($date, 0);
+            $expenseChartData[] = $dailyExpensesQuery->get($date, 0);
+            $incomeChartData[] = $dailyIncomesQuery->get($date, 0);
         }
         
         $dailyExpenseChart = [
             'labels' => $chartLabels,
-            'data' => $chartData,
+            'expense' => $expenseChartData,
+            'income' => $incomeChartData,
         ];
 
         // 5. Insight: Kategori Pengeluaran Terbesar Bulan Ini
