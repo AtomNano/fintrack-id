@@ -59,6 +59,13 @@
                             <a href="{{ route('transactions.index') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-exchange-alt mr-2 text-purple-400"></i>Transaksi</a>
                             <a href="{{ route('accounts.index') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-wallet mr-2 text-blue-400"></i>Kelola Kartu</a>
                             <a href="{{ route('budgets.index') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-chart-pie mr-2 text-yellow-400"></i>Anggaran</a>
+                            @if(Auth::user()->role === 'admin')
+                                @if(request()->routeIs('admin.*'))
+                                    <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-user mr-2 text-pink-400"></i>Kembali ke Dashboard User</a>
+                                @else
+                                    <a href="{{ route('admin.dashboard') }}" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-user-shield mr-2 text-purple-400"></i>Kembali ke Dashboard Admin</a>
+                                @endif
+                            @endif
                             
                             <div class="relative dropdown">
                                 <button class="flex items-center space-x-2 text-white">
@@ -128,6 +135,17 @@
                             <a href="{{ route('budgets.index') }}" class="block p-3 {{ request()->routeIs('budgets.*') ? 'bg-purple-700/80' : 'hover:bg-white/10' }} rounded-lg transition-colors text-white">
                                 <i class="fas fa-chart-pie mr-3 text-yellow-400"></i>Anggaran
                             </a>
+                        @endif
+                        @if (Auth::user()->role === 'admin')
+                            @if(request()->routeIs('admin.*'))
+                                <a href="{{ route('dashboard') }}" class="block p-3 hover:bg-white/10 rounded-lg transition-colors text-pink-400">
+                                    <i class="fas fa-user mr-3"></i>Kembali ke Dashboard User
+                                </a>
+                            @else
+                                <a href="{{ route('admin.dashboard') }}" class="block p-3 hover:bg-white/10 rounded-lg transition-colors text-purple-400">
+                                    <i class="fas fa-user-shield mr-3"></i>Kembali ke Dashboard Admin
+                                </a>
+                            @endif
                         @endif
                         <hr class="my-4 border-white/20">
                         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block p-3 text-red-400 hover:bg-white/10 rounded-lg transition-colors">
