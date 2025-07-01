@@ -135,6 +135,69 @@ class UserDashboardController extends Controller
             ];
         }
 
+        $incomeExpenseSummary = [
+            'labels' => ['Pemasukan', 'Pengeluaran'],
+            'data' => [$totalIncome, $totalExpense],
+        ];
+
+        $expenseChartLabels = [];
+        $expenseChartData = [];
+        $expenseChartColors = [
+            '#8B5CF6', '#06B6D4', '#F59E42', '#F43F5E', '#10B981', '#FBBF24', '#6366F1', '#A3E635', '#F472B6', '#374151'
+        ];
+        foreach ($expensePercentages as $i => $row) {
+            $expenseChartLabels[] = $row['name'];
+            $expenseChartData[] = $row['total'];
+        }
+
+        $categorySummary = [
+            'labels' => $expenseChartLabels,
+            'data' => $expenseChartData,
+            'colors' => $expenseChartColors,
+        ];
+
+        // Data pengeluaran per kategori untuk bulan ini
+        $expenseChartLabelsMonth = [];
+        $expenseChartDataMonth = [];
+        foreach ($expenseByCategory as $row) {
+            $expenseChartLabelsMonth[] = $row->name;
+            $expenseChartDataMonth[] = $row->total;
+        }
+
+        // Data pengeluaran per kategori untuk minggu ini
+        $startOfWeek = $now->startOfWeek()->copy();
+        $endOfWeek = $now->endOfWeek()->copy();
+        $expenseByCategoryWeek = Transaction::where('luthfi_transactions.user_id', $user->id)
+            ->where('luthfi_transactions.type', 'expense')
+            ->whereBetween('luthfi_transactions.transaction_date', [$startOfWeek, $endOfWeek])
+            ->join('luthfi_categories', 'luthfi_transactions.category_id', '=', 'luthfi_categories.id')
+            ->select('luthfi_categories.name', DB::raw('SUM(luthfi_transactions.amount) as total'))
+            ->groupBy('luthfi_categories.name')
+            ->get();
+        $expenseChartLabelsWeek = [];
+        $expenseChartDataWeek = [];
+        foreach ($expenseByCategoryWeek as $row) {
+            $expenseChartLabelsWeek[] = $row->name;
+            $expenseChartDataWeek[] = $row->total;
+        }
+
+        // Data pengeluaran per kategori untuk tahun ini
+        $startOfYear = $now->startOfYear()->copy();
+        $endOfYear = $now->endOfYear()->copy();
+        $expenseByCategoryYear = Transaction::where('luthfi_transactions.user_id', $user->id)
+            ->where('luthfi_transactions.type', 'expense')
+            ->whereBetween('luthfi_transactions.transaction_date', [$startOfYear, $endOfYear])
+            ->join('luthfi_categories', 'luthfi_transactions.category_id', '=', 'luthfi_categories.id')
+            ->select('luthfi_categories.name', DB::raw('SUM(luthfi_transactions.amount) as total'))
+            ->groupBy('luthfi_categories.name')
+            ->get();
+        $expenseChartLabelsYear = [];
+        $expenseChartDataYear = [];
+        foreach ($expenseByCategoryYear as $row) {
+            $expenseChartLabelsYear[] = $row->name;
+            $expenseChartDataYear[] = $row->total;
+        }
+
         return view('dashboard', compact(
             'totalIncome', 
             'totalExpense',
@@ -144,7 +207,13 @@ class UserDashboardController extends Controller
             'recentTransactions',
             'incomePercentages',
             'expensePercentages',
-            'years'
+            'years',
+            'incomeExpenseSummary',
+            'categorySummary',
+            'expenseChartLabelsMonth', 'expenseChartDataMonth',
+            'expenseChartLabelsWeek', 'expenseChartDataWeek',
+            'expenseChartLabelsYear', 'expenseChartDataYear',
+            'expenseChartColors'
         ));
     }
 } 

@@ -211,10 +211,10 @@
                 <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold text-white">Aktivitas</h3>
-                        <select class="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm">
-                            <option>Bulan</option>
-                            <option>Minggu</option>
-                            <option>Tahun</option>
+                        <select id="activityRange" class="bg-white/10 border border-white/20 rounded-lg px-3 py-1 text-white text-sm">
+                            <option value="month" style="color: black;">Bulan</option>
+                            <option value="week" style="color: black;">Minggu</option>
+                            <option value="year" style="color: black;">Tahun</option>
                         </select>
                     </div>
                     
@@ -225,18 +225,6 @@
                                 
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="space-y-3">
-                        @foreach($expensePercentages as $item)
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
-                                <span class="text-gray-300 text-sm">{{ $item['name'] }}</span>
-                            </div>
-                            <span class="text-white font-medium">{{ $item['percentage'] }}%</span>
-                        </div>
-                        @endforeach
                     </div>
                     
                     <button class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-lg py-3 text-white font-medium mt-6 hover:bg-white/20 transition-colors" onclick="window.location='{{ route('transactions.index') }}'" type="button">
@@ -306,15 +294,29 @@
 
     // Activity Doughnut Chart
     const activityCtx = document.getElementById('activityChart');
-    new Chart(activityCtx, {
+    const activityData = {
+        month: {
+            labels: @json($expenseChartLabelsMonth),
+            data: @json($expenseChartDataMonth)
+        },
+        week: {
+            labels: @json($expenseChartLabelsWeek),
+            data: @json($expenseChartDataWeek)
+        },
+        year: {
+            labels: @json($expenseChartLabelsYear),
+            data: @json($expenseChartDataYear)
+        }
+    };
+    const activityColors = @json($expenseChartColors);
+
+    let activityChart = new Chart(activityCtx, {
         type: 'doughnut',
         data: {
-            labels: @json(array_column($expensePercentages, 'name')),
+            labels: activityData.month.labels,
             datasets: [{
-                data: @json(array_column($expensePercentages, 'percentage')),
-                backgroundColor: [
-                    '#8B5CF6', '#06B6D4', '#F59E42', '#F43F5E', '#10B981', '#FBBF24', '#6366F1', '#A3E635', '#F472B6', '#374151'
-                ],
+                data: activityData.month.data,
+                backgroundColor: activityColors,
                 borderWidth: 0,
                 cutout: '70%'
             }]
@@ -335,12 +337,19 @@
                         label: function(context) {
                             let label = context.label || '';
                             let value = context.parsed || 0;
-                            return label + ': ' + value + '%';
+                            return label + ': Rp ' + value.toLocaleString();
                         }
                     }
                 }
             }
         }
+    });
+
+    document.getElementById('activityRange').addEventListener('change', function(e) {
+        const val = e.target.value;
+        activityChart.data.labels = activityData[val].labels;
+        activityChart.data.datasets[0].data = activityData[val].data;
+        activityChart.update();
     });
 
     document.addEventListener('DOMContentLoaded', function() {
