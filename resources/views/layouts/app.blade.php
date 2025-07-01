@@ -38,15 +38,38 @@
         }
     </style>
 </head>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<body class="w-screen min-h-screen bg-[#141332]">
+    <div id="app" class="flex flex-col min-h-screen w-screen">
+        <!-- Navigation -->
+        @if (!request()->routeIs('dashboard'))
+        <nav class="gradient-bg financial-pattern shadow-xl sticky top-0 z-40" style="background: rgba(30, 58, 138, 0.95);">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center py-4">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl p-2">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+=======
 <body class="glassmorphism-bg text-gray-200 antialiased">
     <div id="app" class="min-h-screen flex flex-col">
         <!-- Navigation -->
+=======
+<body class="glassmorphism-bg text-gray-200 antialiased">
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Navigation -->
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
         <nav class="bg-white/5 backdrop-blur-md sticky top-0 z-40 border-b border-white/10">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-between items-center h-20">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-3">
                         <div class="bg-purple-500/20 text-purple-400 p-2 rounded-lg">
                             <i class="fas fa-chart-line text-xl"></i>
+<<<<<<< HEAD
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
+=======
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
                         </div>
                         <span class="text-2xl font-bold text-white">
                             FinTrack<span class="text-purple-400">ID</span>
@@ -82,6 +105,7 @@
                 </div>
             </div>
         </nav>
+        @endif
 
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="mobile-menu lg:hidden fixed top-0 right-0 w-80 h-full bg-black/80 backdrop-blur-xl border-l border-white/10 z-50 transition-transform duration-300 translate-x-full">
@@ -146,9 +170,22 @@
         @endauth
 
         <!-- Main Content -->
+<<<<<<< HEAD
+<<<<<<< HEAD
+        <main class="py-10 flex-grow">
+            <div class="w-full px-4">
+                @yield('content')
+            </div>
+=======
         <main class="flex-grow">
             {{-- Konten dari setiap halaman akan dimuat di sini --}}
             @yield('content')
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
+=======
+        <main class="flex-grow">
+            {{-- Konten dari setiap halaman akan dimuat di sini --}}
+            @yield('content')
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
         </main>
         
         <footer class="bg-white shadow-inner mt-auto">

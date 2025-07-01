@@ -3,7 +3,15 @@
 @section('title', 'Selamat Datang di FinTrack ID')
 
 @section('content')
+<<<<<<< HEAD
+<<<<<<< HEAD
+<div class="bg-white w-screen min-h-screen">
+=======
 <div class="min-h-screen flex flex-col justify-center items-center">
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
+=======
+<div class="min-h-screen flex flex-col justify-center items-center">
+>>>>>>> 302a2af242fdd52b4c1ca798224d0aa19e5bb93d
     <!-- Hero Section -->
     <div class="glassmorphism bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-8 py-16 mt-12 mb-8 w-full max-w-3xl text-center shadow-xl">
         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
