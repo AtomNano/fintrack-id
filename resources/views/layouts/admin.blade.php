@@ -26,11 +26,11 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         .admin-content {
-            background-color: #f8fafc;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 100%);
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
     <div class="flex">
         <!-- Sidebar Admin -->
         <div class="admin-sidebar w-64 fixed h-full">
