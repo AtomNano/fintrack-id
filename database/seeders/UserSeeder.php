@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         // Admin Users
         User::create([
             'name' => 'Admin FinTrack',
-            'email' => 'admin@fintrack.id',
+            'email' => 'admin@fintrack.id', 
             'password' => Hash::make('password'),
             'role' => 'admin',
             'email_verified_at' => now(),
